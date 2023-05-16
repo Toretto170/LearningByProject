@@ -5,6 +5,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -16,7 +17,10 @@ public class Parola {
 	private int id;
 	
 	@Column
-	private String testo_parola;
+	private String testoParola;
+	
+	@ManyToOne
+	private Frase paroleInFrase;
 
 	public int getId() {
 		return id;
@@ -26,12 +30,20 @@ public class Parola {
 		this.id = id;
 	}
 
-	public String getTesto_parola() {
-		return testo_parola;
+	public String getTestoParola() {
+		return testoParola;
 	}
 
-	public void setTesto_parola(String testo_parola) {
-		this.testo_parola = testo_parola;
+	public void setTestoParola(String testParola) {
+		this.testoParola = testoParola;
 	}
-		 
+
+	public Frase getParoleInFrase() {
+		return paroleInFrase;
+	}
+
+	public void setParoleInFrase(Frase paroleInFrase) {
+		this.paroleInFrase = paroleInFrase;
+	}
+				 
 }
