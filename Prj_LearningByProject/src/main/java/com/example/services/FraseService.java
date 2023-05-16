@@ -10,4 +10,6 @@ public interface FraseService {
 	
 	Frase getFraseById (int id);
 	
+	List<String> getTestoFrase();
+	
 }

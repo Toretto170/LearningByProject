@@ -10,5 +10,6 @@ public interface ParolaService {
 	
 	Parola getParolaById (int id);
 	
-
+	List<String> getTestoParola();
+	
 }
