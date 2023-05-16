@@ -32,21 +32,16 @@ CREATE DATABASE learningbyproject;
 
 USE learningbyproject;
 
-CREATE TABLE Testo (
-    id INT PRIMARY KEY,
-    text VARCHAR(255)
+CREATE TABLE frase (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    testo_frase MEDIUMTEXT
 );
 
-CREATE TABLE Frase (
-    id INT PRIMARY KEY,
-    text VARCHAR(255),
-    testo_fk INT,
-    FOREIGN KEY (testo_fk) REFERENCES Testo(id)
-);
-
-CREATE TABLE Parola (
-    id INT PRIMARY KEY,
-    text VARCHAR(255),
+CREATE TABLE parola (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    testo_parola TINYTEXT,
     frase_fk INT,
     FOREIGN KEY (frase_fk) REFERENCES Frase(id)
 );
+
+-------------------------------------------------------------------------
