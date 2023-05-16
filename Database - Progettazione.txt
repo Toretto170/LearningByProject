@@ -1,0 +1,52 @@
+Progettazione DB Learning By Project:
+
+Dati i seguenti scopi:
+- contare il numero di caratteri in un testo
+- contare il numero di frasi in un testo
+- contare il numero di parole in un testo
+- la parola più lunga
+....
+
+
+Il Database è formato in questa maniera:
+
+DB: learningbyproject
+
+Tabella-Testo: 
+	id
+	text	
+
+Tabella-Frase:
+	id
+	text
+	testo_fk
+
+Tabella-Parola:
+	id
+	text
+	frase_fk
+
+----------------------------------------------------------------------
+
+CREATE DATABASE learningbyproject;
+
+USE learningbyproject;
+
+CREATE TABLE Testo (
+    id INT PRIMARY KEY,
+    text VARCHAR(255)
+);
+
+CREATE TABLE Frase (
+    id INT PRIMARY KEY,
+    text VARCHAR(255),
+    testo_fk INT,
+    FOREIGN KEY (testo_fk) REFERENCES Testo(id)
+);
+
+CREATE TABLE Parola (
+    id INT PRIMARY KEY,
+    text VARCHAR(255),
+    frase_fk INT,
+    FOREIGN KEY (frase_fk) REFERENCES Frase(id)
+);
