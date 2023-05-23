@@ -34,7 +34,7 @@ public class Parola {
 		return testoParola;
 	}
 
-	public void setTestoParola(String testParola) {
+	public void setTestoParola(String testoParola) {
 		this.testoParola = testoParola;
 	}
 

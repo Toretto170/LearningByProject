@@ -1,54 +1,69 @@
 package com.example.script;
 
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
 import java.io.IOException;
 
 public class Script {
+	
+	// Costruisce un'espressione regolare che rappresenta una scelta tra una lista di stringhe
 	private static String buildRegexOR(String[] list) {
-		// DO NOT use
+		// NON utilizzare
 		String toReturn = "(";
 		String[] temp = {".", "?", "s", "n", "r"};
-		List needEscapeChar = Arrays.asList(temp);
+		List<String> needEscapeChar = Arrays.asList(temp);
 		for (String string : list) {
-			if (needEscapeChar.contains(string)) {toReturn+="\\\\";}
-			toReturn+=string+"|";
+			if (needEscapeChar.contains(string)) {
+				toReturn += "\\\\";
+			}
+			toReturn += string + "|";
 		}
-		return toReturn+")";
+		return toReturn + ")";
 	}
-	
-	public static List<Frase> leggi(String pathFile) throws ScriptException{
-		List<Frase> testo = new ArrayList<Frase>();
+
+	// Legge il testo e crea una Lista di frasi formata ognuna da una lista di parole
+	public static List<Frase> leggiPerFrasiParole(String text) throws ScriptException {
+		List<Frase> testo = new ArrayList<>();
 		try {
 			String[] preRegex = {".", "?", "!", ";"};
-		    String text = Files.readString(Path.of(pathFile));
-			List<String> frases =Arrays.asList( text.replaceAll("((\\r\\n)|(\\n))", "") // replace new line char, it should work for both Windows and Unix-like OS
-									.split("(\\.|\\?|!|;)(\s)*")); // split when . ; ? ! followed by 0 or more spaces
-			
+			List<String> frases = Arrays.asList(text.replaceAll("((\\r\\n)|(\\n))", "")
+					.split("(\\.|\\?|!|;)(\\s)*")); // divide quando . ; ? ! seguito da 0 o più spazi
+
 			for (String string : frases) {
 				Frase aa = new Frase(Arrays.asList(
 						string.replaceAll("(,|:|\\\"|-)", "")
-							  .replaceAll("\\'", " ")
-							  .split(" ")));
+								.replaceAll("\\'", " ")
+								.split(" ")));
 				testo.add(aa);
-				//for (Parola s : aa.getFrase()) {
-				//	System.out.println(s.getText());
-				//}
 			}
 
-		 } catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 		return testo;
 	}
+	
+	// Suddivide il testo in frasi con punteggiatura e restituisce una lista di frasi
+	public static List<String> leggiPerFrasi(String text) {
+        List<String> sentences = new ArrayList<>();
+
+        // Rimuovi eventuali spazi bianchi all'inizio e alla fine del testo
+        text = text.trim();
+
+        // Crea un delimitatore basato sulla punteggiatura comune delle frasi
+        String delimiter = "(?<=[.!?])\\s+";
+
+        // Dividi il testo in frasi utilizzando il delimitatore
+        String[] splitText = text.split(delimiter);
+
+        // Aggiungi le frasi alla lista
+        for (String sentence : splitText) {
+            sentences.add(sentence.trim());
+        }
+
+        return sentences;
+    }
 }
-
-

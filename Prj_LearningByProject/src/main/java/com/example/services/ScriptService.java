@@ -6,9 +6,11 @@ import com.example.entities.Frase;
 import com.example.entities.Parola;
 
 public interface ScriptService {
-	
-	void creaParola(String parola, Frase frase);
 
-	void creaFrase(String frase);
+    // Metodo per creare una nuova Parola all'interno di una Frase
+    void creaParola(String parola, Frase frase);
+
+    // Metodo per creare una nuova Frase
+    Frase creaFrase(String frase);
 
 }

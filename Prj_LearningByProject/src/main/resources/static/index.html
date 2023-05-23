@@ -10,11 +10,9 @@
 </head>
 <body>
     <i><h1>Benvenuti nel sito</h1></i>
-    <h2>Clicca sul pulsante "Scegli File per caricare il file txt e ti daremo il contenuto del testo</h2>
-    <form id="upload-form">
-        <input type="file"  id="file-input"name="file" accept=".txt"/>
-        <button type="submit">Carica</button> 
-      </form>
+    <h2>Clicca sul pulsante "Scegli File per caricare il file txt e ti daremo un'analisi del contenuto del testo</h2>
+    <input type="file" id="fileInput">
+  	<button onclick="processFile()">Elabora</button>
       <script src="main.js"></script>
  
       <div id="analisi_testo"></div>

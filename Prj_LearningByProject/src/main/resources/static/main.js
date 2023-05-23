@@ -1,34 +1,27 @@
-function handleFormSubmit(event) {
-    event.preventDefault();
-    const fileInput = document.getElementById("file-input")
-    const file = fileInput.files[0];
-  
-    if (file) {
-      const formData = new FormData();
-      formData.append('file', file);
-  
-      fetch('http://localhost:9020/api/upload', {
-        method: 'POST',
-        body: formData,
-        // TODO add missing header
-        // TODO add header request "Access-Control-Allow-Origin"
-      })
-        .then((response) => {
-          if (response.ok) {
-            return response.text();
+function processFile() {
+      const fileInput = document.getElementById('fileInput');
+      const file = fileInput.files[0];
+
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        const text = e.target.result;
+
+        const url = 'http://localhost:9020/api/process';
+
+        const xhr = new XMLHttpRequest();
+        xhr.open('POST', url);
+        xhr.setRequestHeader('Content-Type', 'text/plain');
+        xhr.onload = function() {
+          if (xhr.status === 200) {
+            console.log('Risposta:', xhr.responseText);
           } else {
-            throw new Error('Errore durante il caricamento del file');
+            console.error('Errore:', xhr.status);
           }
-        })
-        .then((responseText) => {
-          console.log(responseText); // Esegui azioni con la risposta del server
-        })
-        .catch((error) => {
-          console.error(error); // Gestisci eventuali errori
-        });
+        };
+        xhr.onerror = function() {
+          console.error('Errore di rete');
+        };
+        xhr.send(text);
+      };
+      reader.readAsText(file);
     }
-  }
-  
-  const form = document.getElementById('upload-form');
-  form.addEventListener('submit', handleFormSubmit);
-  
