@@ -9,7 +9,7 @@ public interface ScriptService {
 	
 	List<String> getParola();
 	Parola getParolaById (int id);
-	List<String> getTestoParola(Parola parola);
+	List<String> getTestoParola();
 	void creaParola(String parola, Frase frase);
 	
 	List<String> getFrase();

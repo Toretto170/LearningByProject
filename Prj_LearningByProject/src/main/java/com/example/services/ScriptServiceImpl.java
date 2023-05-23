@@ -6,6 +6,7 @@ import java.util.Set;
 import java.util.TreeSet;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Service;
 
 import com.example.entities.Parola;
@@ -45,7 +46,7 @@ public class ScriptServiceImpl implements ScriptService{
 
 	@Override
 	public List<String> getTestoParola() {
-		return parolaDao.findOne();
+		return null;
 	}
 
 	@Override
