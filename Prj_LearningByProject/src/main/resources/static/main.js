@@ -1,15 +1,17 @@
 function handleFormSubmit(event) {
     event.preventDefault();
-  
+    const fileInput = document.getElementById("file-input")
     const file = fileInput.files[0];
   
     if (file) {
       const formData = new FormData();
       formData.append('file', file);
   
-      fetch('/upload', {
+      fetch('http://localhost:9020/api/upload', {
         method: 'POST',
         body: formData,
+        // TODO add missing header
+        // TODO add header request "Access-Control-Allow-Origin"
       })
         .then((response) => {
           if (response.ok) {
