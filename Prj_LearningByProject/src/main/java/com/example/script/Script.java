@@ -1,6 +1,5 @@
 package com.example.script;
 
-
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
@@ -9,11 +8,8 @@ import java.util.List;
 import java.io.IOException;
 
 public class Script {
-	public static void main(String[] args) throws ScriptException {
-		leggi("C:\\Users\\stepr\\Downloads\\a.txt");
-	}
-	
 	private static String buildRegexOR(String[] list) {
+		// DO NOT use
 		String toReturn = "(";
 		String[] temp = {".", "?", "s", "n", "r"};
 		List needEscapeChar = Arrays.asList(temp);
