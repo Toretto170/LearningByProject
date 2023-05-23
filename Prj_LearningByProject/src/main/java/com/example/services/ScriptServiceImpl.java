@@ -11,14 +11,20 @@ import org.springframework.stereotype.Service;
 import com.example.entities.Parola;
 import com.example.entities.Frase;
 import com.example.repos.ParolaDAO;
+
+import jakarta.persistence.EntityManager;
+
 import com.example.repos.FraseDAO;
 
 @Service
-public class TestoServiceImpl implements TestoService{
+public class ScriptServiceImpl implements ScriptService{
 	
 	@Autowired
 	private FraseDAO fraseDao;
+	@Autowired
 	private ParolaDAO parolaDao;
+	@Autowired
+	EntityManager entityManager;
 	
 	@Override
 	public List<String> getParola() {
@@ -33,30 +39,13 @@ public class TestoServiceImpl implements TestoService{
 	}
 
 	@Override
-	public List<Provincia> getProvince() {
-		return dao.findAll();
-	}
-
-	@Override
-	public List<Provincia> getProvinceByRegione(String regione) {
-		return null;
-	}
-
-	@Override
-	public Provincia getProvinciaById(int id) {
-		return dao.getReferenceById(id);
-	}
-
-	@Override
 	public Parola getParolaById(int id) {
-		// TODO Auto-generated method stub
-		return null;
+		return parolaDao.getReferenceById(id);
 	}
 
 	@Override
 	public List<String> getTestoParola() {
-		// TODO Auto-generated method stub
-		return null;
+		return parolaDao.findOne();
 	}
 
 	@Override
@@ -88,5 +77,20 @@ public class TestoServiceImpl implements TestoService{
 		// TODO Auto-generated method stub
 		return 0;
 	}
+	
+	@Override
+	public void creaParola(String parola, Frase frase) {
+		Parola p = new Parola();
+		p.setTestoParola(parola);
+		p.setParoleInFrase(frase);
+		parolaDao.save(p);
+	  }
 
+	@Override
+	public void creaFrase(String frase) {
+		Frase f = new Frase();
+		f.setTestoFrase(frase);
+		fraseDao.save(f);
+	  }
 }
+
