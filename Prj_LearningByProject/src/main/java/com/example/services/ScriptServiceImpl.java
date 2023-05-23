@@ -33,7 +33,7 @@ public class ScriptServiceImpl implements ScriptService{
 		Set<String> parole = new TreeSet<>();
 		
 		for (String p : getParola()) {
-			parole.add(p.getParole());
+			parole.add(p.getParoleInFrase());
 		}
 		
 		return new ArrayList<>(parole);
@@ -51,14 +51,18 @@ public class ScriptServiceImpl implements ScriptService{
 
 	@Override
 	public List<String> getFrase() {
-		// TODO Auto-generated method stub
-		return null;
+		Set<String> frasi = new TreeSet<>();
+		
+		for (String f : getFrase()) {
+			frasi.add(f.getFraseinTesto);
+		}
+		
+		return new ArrayList<>(frasi);
 	}
 
 	@Override
 	public Frase getFraseById(int id) {
-		// TODO Auto-generated method stub
-		return null;
+		return fraseDao.getReferenceById(id);
 	}
 
 	@Override
