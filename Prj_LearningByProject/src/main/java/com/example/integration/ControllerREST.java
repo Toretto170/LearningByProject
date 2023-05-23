@@ -14,7 +14,7 @@ public class ControllerREST {
 	@Autowired
 	private ScriptService service;
 	
-	@GetMapping("parole")
+	@GetMapping("analisi")
 	public service.
 
 }
