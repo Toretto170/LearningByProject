@@ -12,23 +12,35 @@ import com.example.entities.Frase;
 import com.example.entities.Parola;
 import com.example.services.FraseService;
 import com.example.services.ParolaService;
+import com.example.services.TestoService;
 
 @RestController
 @RequestMapping ("api")
 public class ControllerREST {
 	
 	@Autowired
-	private FraseService serviceFrase;
 	private ParolaService serviceParola;
+	private FraseService serviceFrase;
+	private TestoService serviceTesto;
+	
+	@GetMapping("parola")
+	List<String> getParola(){
+		return serviceParola.getParola();
+	}
 	
 	@GetMapping("frase")
 	List<String> getFrase(){
 		return serviceFrase.getFrase();
 	}
 	
-	@GetMapping("parola")
-	List<String> getParola(){
-		return serviceParola.getParola();
+	@GetMapping("testo")
+	List<String> getTesto(){
+		return serviceTesto.getTesto();
+	}
+
+	@GetMapping("parola/{id}")
+	Parola getProvincia(@PathVariable int id) {
+		return serviceParola.getParolaById(id);
 	}
 	
 	@GetMapping("frase/{id}")
@@ -36,19 +48,14 @@ public class ControllerREST {
 		return serviceFrase.getFraseById(id); 
 	}
 	
-	@GetMapping("parola/{id}")
-	Parola getProvincia(@PathVariable int id) {
-		return serviceParola.getParolaById(id);
+	@GetMapping ("testoParola")
+	List<String> getTestoParola(){
+		return serviceParola.getTestoParola();
 	}
 	
 	@GetMapping ("testoFrase")
 	List<String> getTestoFrase(){
 		return serviceFrase.getTestoFrase();
-	}
-	
-	@GetMapping ("testoParola")
-	List<String> getTestoParola(){
-		return serviceParola.getTestoParola();
 	}
 
 }
