@@ -1,5 +1,6 @@
 package com.example.script;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Frase {
@@ -9,20 +10,23 @@ public class Frase {
 		setFrase(_frase);
 	}
 	
-	private void isFrase(List<String> _frase) throws ScriptException{
-		for (String string : _frase) {
+	private void isFrase(List<String> _param) throws ScriptException{
+		System.out.println(_param);
+		List<Parola> _frase = new ArrayList<Parola>();;
+		for (String string : _param) {
 			Parola temp;
 			try {
 				temp = new Parola(string);
 			} catch (ScriptException e) {
 				throw new ScriptException(
 					"Invalid parameter '_frase', error at index: "
-					.concat(Integer.toString(_frase.indexOf(string)))
+					.concat(Integer.toString(_param.indexOf(string)))
 					.concat(e.getMessage()) 
 				);
 			}
-			frase.add(temp);
+			_frase.add(temp);
 		} 
+		this.frase = _frase;
 	}
 	
 	public List<Parola> getFrase(){

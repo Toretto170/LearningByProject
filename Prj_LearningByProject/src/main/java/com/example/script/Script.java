@@ -1,26 +1,58 @@
 package com.example.script;
 
-import java.io.File;  // Import the File class
-import java.io.FileNotFoundException;  // Import this class to handle errors
-import java.util.Scanner; // Import the Scanner class to read text files
+
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.io.IOException;
 
 public class Script {
+	public static void main(String[] args) throws ScriptException {
+		leggi("C:\\Users\\stepr\\Downloads\\a.txt");
+	}
 	
-	public void leggi(String pathFile) throws ScriptException{
+	private static String buildRegexOR(String[] list) {
+		String toReturn = "(";
+		String[] temp = {".", "?", "s", "n", "r"};
+		List needEscapeChar = Arrays.asList(temp);
+		for (String string : list) {
+			if (needEscapeChar.contains(string)) {toReturn+="\\\\";}
+			toReturn+=string+"|";
+		}
+		return toReturn+")";
+	}
+	
+	public static List<Frase> leggi(String pathFile) throws ScriptException{
+		List<Frase> testo = new ArrayList<Frase>();
 		try {
-			File f = new File(pathFile);
-			if (f.exists()) {
-				char[] endOfPhrase = {'.', '?', '!', ';'};
-				
-			    Scanner myReader = new Scanner(f);
-			    while (myReader.hasNextLine()) {
-			    	// TODO dividere testo in frasi usando endOfPhrase
-			    }
-			    myReader.close();
-			}else throw new FileNotFoundException();
-		 } catch (FileNotFoundException e) {
-		      System.out.println("An error occurred.");
-		      e.printStackTrace();
-		 }
+			String[] preRegex = {".", "?", "!", ";"};
+		    String text = Files.readString(Path.of(pathFile));
+			List<String> frases =Arrays.asList( text.replaceAll("((\\r\\n)|(\\n))", "") // replace new line char, it should work for both Windows and Unix-like OS
+									.split("(\\.|\\?|!|;)(\s)*")); // split when . ; ? ! followed by 0 or more spaces
+			
+			for (String string : frases) {
+				Frase aa = new Frase(Arrays.asList(
+						string.replaceAll("(,|:|\\\"|-)", "")
+							  .replaceAll("\\'", " ")
+							  .split(" ")));
+				testo.add(aa);
+				//for (Parola s : aa.getFrase()) {
+				//	System.out.println(s.getText());
+				//}
+			}
+
+		 } catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return testo;
 	}
 }
+
+
