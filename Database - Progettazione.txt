@@ -72,7 +72,7 @@ Funzioni SQL per ottenere analisi:
         SELECT MIN(conteggio_caratteri) AS caratteri_frase_piu_corta FROM (SELECT LENGTH(testo_frase) AS conteggio_caratteri FROM frase) AS conteggio_tabella;
 
     *Ottenere il contenuto della frase più lunga
-        SELECT testo_frase FROM frase WHERE LENGTH(testo_frase) = ( SELECT MAX(LENGTH(testo_frase)) FROM frase );
+        SELECT testo_frase FROM frase WHERE LENGTH(testo_frase) = ( SELECT MAX(LENGTH(testo_frase)) FROM frase ); 
 
     *Ottenere il contenuto della frase più breve
         SELECT testo_frase FROM frase WHERE LENGTH(testo_frase) = ( SELECT MIN(LENGTH(testo_frase)) FROM frase );

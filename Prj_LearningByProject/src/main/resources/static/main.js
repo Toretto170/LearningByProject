@@ -1,38 +1,32 @@
-var uploadForm = document.getElementById('upload-form');
-
-uploadForm.addEventListener('submit', function(event){
+function handleFormSubmit(event) {
     event.preventDefault();
-
-    var fileInput = document.getElementById('file-input');
-
-    if (fileInput.files.length > 0) {
-
-        var formData = new FormData();
-
-        formData.append('file', fileInput.files[0]);
-        
-        var xhr = new XMLHttpRequest();
-
-        var url = '/upload' // end point dove funziona l'api, bisogna mettere localhost con porta
-
-        xhr.open('POST', url, true);
-        
-        xhr.onreadystatechange = function() {
-        
-            if (xhr.readyState === 4 && xhr.status === 200) {
-        
-                console.log('File caricato con successo');
-        
-            }
-        };
-        
-        xhr.send(formData);
+  
+    const file = fileInput.files[0];
+  
+    if (file) {
+      const formData = new FormData();
+      formData.append('file', file);
+  
+      fetch('/upload', {
+        method: 'POST',
+        body: formData,
+      })
+        .then((response) => {
+          if (response.ok) {
+            return response.text();
+          } else {
+            throw new Error('Errore durante il caricamento del file');
+          }
+        })
+        .then((responseText) => {
+          console.log(responseText); // Esegui azioni con la risposta del server
+        })
+        .catch((error) => {
+          console.error(error); // Gestisci eventuali errori
+        });
     }
-});
-
-
-
-
-
-
-
+  }
+  
+  const form = document.getElementById('upload-form');
+  form.addEventListener('submit', handleFormSubmit);
+  

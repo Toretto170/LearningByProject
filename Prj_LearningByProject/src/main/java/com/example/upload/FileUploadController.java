@@ -1,55 +1,40 @@
 package com.example.upload;
 
-import java.io.IOException;
-
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.example.repos.FraseDAO;
-import com.example.repos.ParolaDAO;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 
 @Controller
 public class FileUploadController {
 
-    @Autowired
-    private ParolaDAO parolaRepo;
-    
-    @Autowired
-    private FraseDAO fraseRepo;
+    @Value("/repofilesalvati")
+    private String fileUploadPath;
 
-    @PostMapping(value = "/upload", consumes = "multipart/form-data")
+    @PostMapping("/upload")
     public ResponseEntity<String> handleFileUpload(@RequestParam("file") MultipartFile file) {
         if (!file.isEmpty()) {
             try {
-                byte[] fileBytes = file.getBytes();
-                String fileContent = new String(fileBytes);
-                
-                //logica di stefano per scomporre testo in frasi e parole
-                /*
-                 * // Utilizza Scanner per suddividere il contenuto in parole e frasi
-                Scanner scanner = new Scanner(fileContent);
-                
-                while (scanner.hasNext()) {
-                    String word = scanner.next();
-                    String sentence = scanner.nextLine().trim();
-                    
-                    Parola parola = new Parola();
-                    parola.setParola(word);
-                    parolaRepo.save(parola);
-                    
-                    Frase frase = new Frase();
-                    frase.setFrase(sentence);
-                    fraseRepo.save(frase);
-                }
-                
-                scanner.close();
-                 * */
-                
+                // Ottieni il nome del file originale
+                String originalFilename = file.getOriginalFilename();
+
+                // Crea il percorso completo in cui salvare il file
+                String filePath = fileUploadPath + File.separator + originalFilename;
+
+                // Crea un oggetto File dal percorso
+                File destFile = new File(filePath);
+
+                // Salva il file nella posizione specificata
+                FileCopyUtils.copy(file.getInputStream(), new FileOutputStream(destFile));
+
                 return ResponseEntity.status(HttpStatus.OK).body("File caricato con successo");
             } catch (IOException e) {
                 e.printStackTrace();
