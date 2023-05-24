@@ -32,42 +32,34 @@ public class ControllerREST {
 	//public service.
 
 	
-    // Endpoint per elaborare il testo
     @PostMapping("/process")
     public ResponseEntity<List<Frase>> processText(@RequestBody String text) {
         try {
-            // Chiama Script.leggi(text) per elaborare il testo e ottenere una lista di oggetti Frase
+            // Chiamiamo i metodi nella classe Script per suddividere il testo in parole e frasi
             List<Frase> result = Script.leggiPerFrasiParole(text);
-            // Suddivide il testo in frasi utilizzando Script.splitTextIntoSentences(text)
             List<String> result2 = Script.leggiPerFrasi(text);
             
+            //Contatore necessario per riuscire ad asscociare le parole alle frasi
             int scorriListaFrasi = 0;
 
-            // Itera su ogni oggetto Frase nella lista risultato
+            // Per ogni frase dammi la lista di parole in esso contenuta
             for (Frase frase : result) {
 				
-                // Ottiene la frase corrispondente con punteggiatura dalla lista result2
                 String fraseconpunteggiatura = result2.get(scorriListaFrasi);
-                
-                // Crea un'istanza di com.example.entities.Frase utilizzando serviceimpl
                 com.example.entities.Frase fraseperdb = serviceimpl.creaFrase(fraseconpunteggiatura);
                 
-                // Itera su ogni oggetto Parola nella frase corrente
+                // Per ogni lista di parole dammi una parola per volta
                 for (Parola frase2 : frase.getFrase()) {
                     
-                    // Ottiene il testo dell'oggetto Parola
                     String parola = frase2.getText();
-                    
-                    // Crea una voce per l'oggetto Parola corrente utilizzando serviceimpl
                     serviceimpl.creaParola(parola, fraseperdb);
                 }
                 
-                // Incrementa il contatore per l'iterazione sulle frasi
                 scorriListaFrasi++;
 			}
             
-            // Restituisce la lista elaborata di oggetti Frase
             return ResponseEntity.ok(result);
+        
         } catch (ScriptException e) {
             e.printStackTrace();
             
