@@ -1,11 +1,13 @@
 package com.example.integration;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -28,9 +30,15 @@ public class ControllerREST {
 	@Autowired
 	private ScriptServiceImpl serviceimpl;
 	
-	//@GetMapping("analisi")
-	//public service.
-
+	@GetMapping("/analisi")
+	public ArrayList<String> getAnalisi() {
+		return serviceimpl.analisi();
+	}
+	
+	@DeleteMapping("/svuota")
+	public void svuotaTabelle() {
+		serviceimpl.cancellaRecords();
+	}
 	
     @PostMapping("/process")
     public ResponseEntity<List<Frase>> processText(@RequestBody String text) {
@@ -57,6 +65,8 @@ public class ControllerREST {
                 
                 scorriListaFrasi++;
 			}
+            
+            //scorriListaFrasi = 0;
             
             return ResponseEntity.ok(result);
         

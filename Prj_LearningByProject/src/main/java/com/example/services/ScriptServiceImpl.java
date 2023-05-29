@@ -29,7 +29,7 @@ public class ScriptServiceImpl implements ScriptService {
     public void creaParola(String parola, Frase frase) {
         Parola p = new Parola();
         p.setTestoParola(parola);
-        p.setParoleInFrase(frase);
+        p.setFraseFk(frase);
         parolaDao.save(p);
     }
 
@@ -39,4 +39,50 @@ public class ScriptServiceImpl implements ScriptService {
         f.setTestoFrase(frase);
         return fraseDao.save(f);
     }
+    
+    @Override
+    public ArrayList<String> analisi() {
+		
+    	ArrayList<String> analisi = new ArrayList<String>();
+    	    	
+		analisi.add("Numero di caratteri nel testo: " + fraseDao.getNumeroCaratteriTotali());
+		analisi.add("Numero di frasi nel testo: " + fraseDao.getNumeroFrasi());
+		analisi.add("Numero di parole nel testo: " +  parolaDao.getNumeroParole());
+		analisi.add("Numero medio caratteri per frase: " + fraseDao.getNumeroMedioCaratteriPerFrase());
+		analisi.add("Numero medio caratteri per parola: " + parolaDao.getNumeroMedioCaratteriPerParola());
+		analisi.add("Numero medio di parole per frase: " + parolaDao.getNumeroMedioParolePerFrase());
+		analisi.add("Numero di caratteri della frase più lunga: " + fraseDao.getNumeroCaratteriFrasePiuLunga());
+		analisi.add("Numero di caratteri della frase più breve: " + fraseDao.getNumeroCaratteriFrasePiuCorta());
+		analisi.add("Numero di caratteri della parola più lunga: " + parolaDao.getNumeroCaratteriParolaPiuLunga());
+		analisi.add("Numero di caratteri della parola più breve: " + parolaDao.getNumeroCaratteriParolaPiuCorta());
+		
+    	//Possono esserci risultati multipli
+    	analisi.add("La frase più lunga risulta essere: " + stampaArraylist(fraseDao.getContenutoFrasePiuLunga()));
+		analisi.add("La frase più breve risulta essere: " + stampaArraylist(fraseDao.getContenutoFrasePiuBreve()));
+		analisi.add("La parola più lunga risulta essere: " + stampaArraylist(parolaDao.getContenutoParolaPiuLunga()));
+		analisi.add("La parola più breve risulta essere: " + stampaArraylist(parolaDao.getContenutoParolaPiuBreve()));
+		
+    	return analisi;
+    	
+    }
+
+	@Override
+	public String stampaArraylist(ArrayList<String> lista) {
+		String result = "";
+		for (String string : lista) {
+			result += "[" + string + "] ";
+		}
+		return result;
+	}
+
+	@Override
+	public void cancellaRecords() {
+		parolaDao.deleteAll();;
+		parolaDao.resetAutoIncrement();
+		fraseDao.deleteAll();;
+		fraseDao.resetAutoIncrement();
+		
+	}
+
+
 }
