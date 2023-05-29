@@ -20,7 +20,7 @@ public class Parola {
 	private String testoParola;
 	
 	@ManyToOne
-	private Frase paroleInFrase;
+	private Frase fraseFk;
 
 	public int getId() {
 		return id;
@@ -34,16 +34,16 @@ public class Parola {
 		return testoParola;
 	}
 
-	public void setTestoParola(String testParola) {
+	public void setTestoParola(String testoParola) {
 		this.testoParola = testoParola;
 	}
 
-	public Frase getParoleInFrase() {
-		return paroleInFrase;
+	public Frase getFraseFk() {
+		return fraseFk;
 	}
 
-	public void setParoleInFrase(Frase paroleInFrase) {
-		this.paroleInFrase = paroleInFrase;
+	public void setFraseFk(Frase fraseFk) {
+		this.fraseFk = fraseFk;
 	}
 				 
 }
