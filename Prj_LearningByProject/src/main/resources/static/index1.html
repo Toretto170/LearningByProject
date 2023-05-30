@@ -5,34 +5,6 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <!-- Script per inviare il testo al server e ricevere l'analisi -->
     <link rel="stylesheet" href="style1.css">
-    <script>
-        // Funzione che viene chiamata quando si clicca sul pulsante "Analizza"
-        function analizza() {
-            // Prendi il testo dalla textarea
-            var testo = document.getElementById("testo").value;
-            // Crea un oggetto XMLHttpRequest per comunicare con il server
-            var xhr = new XMLHttpRequest();
-            // Imposta il metodo HTTP da usare (POST) e l'URL del server
-            xhr.open("POST", "https://example.com/analisi");
-            // Imposta il tipo di contenuto da inviare (testo semplice)
-            xhr.setRequestHeader("Content-Type", "text/plain");
-            // Imposta la funzione da eseguire quando si riceve la risposta dal server
-            xhr.onload = function() {
-                // Se la richiesta è andata a buon fine (codice 200)
-                if (xhr.status == 200) {
-                    // Prendi l'analisi dal corpo della risposta
-                    var analisi = xhr.responseText;
-                    // Mostra l'analisi in un elemento <div> con id "risultato"
-                    document.getElementById("risultato").innerHTML = analisi;
-                } else {
-                    // Altrimenti, mostra un messaggio di errore
-                    document.getElementById("risultato").innerHTML = "Si è verificato un errore: " + xhr.statusText;
-                }
-            };
-            // Invia la richiesta al server con il testo come corpo
-            xhr.send(testo);
-        }
-    </script>
 </head>
 <body>
     <i><h1>Benvenuti nel sito</h1></i>
@@ -61,5 +33,5 @@
         <div id="risultato"></div>
     </div>
 </body>
-<script src="main1.js"></script>
+<script src="main.js"></script>
 </html>
