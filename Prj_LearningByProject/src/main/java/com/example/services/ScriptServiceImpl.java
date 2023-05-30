@@ -44,8 +44,11 @@ public class ScriptServiceImpl implements ScriptService {
     public ArrayList<String> analisi() {
 		
     	ArrayList<String> analisi = new ArrayList<String>();
+		int numeroFrasi = fraseDao.getNumeroFrasi();
+
     	    	
 		analisi.add("Numero di caratteri nel testo: " + fraseDao.getNumeroCaratteriTotali());
+		analisi.add("Numero di lettere nel testo: " + parolaDao.getNumeroLettereTotali());
 		analisi.add("Numero di frasi nel testo: " + fraseDao.getNumeroFrasi());
 		analisi.add("Numero di parole nel testo: " +  parolaDao.getNumeroParole());
 		analisi.add("Numero medio caratteri per frase: " + fraseDao.getNumeroMedioCaratteriPerFrase());
@@ -61,6 +64,13 @@ public class ScriptServiceImpl implements ScriptService {
 		analisi.add("La frase più breve risulta essere: " + stampaArraylist(fraseDao.getContenutoFrasePiuBreve()));
 		analisi.add("La parola più lunga risulta essere: " + stampaArraylist(parolaDao.getContenutoParolaPiuLunga()));
 		analisi.add("La parola più breve risulta essere: " + stampaArraylist(parolaDao.getContenutoParolaPiuBreve()));
+		analisi.add("La parola o parole più usata/e nel testo: " + stampaArraylist(parolaDao.getParolaPiuUsataTesto()) + "per " + parolaDao.getNumeroParolaPiuUsataTesto() + " volta/e");
+
+		for (int c=1; c<=numeroFrasi; c++) {
+			
+			analisi.add("La parola o parole più usata/e per '" + fraseDao.getTestoFrase(c) + "' sono:" + (stampaArraylist(parolaDao.getParolaPiuUsataInOgniFrase(c))) + "per " + parolaDao.getNumeroParolaPiuUsataInOgniFrase(c) + " volta/e");
+			
+		}
 		
     	return analisi;
     	

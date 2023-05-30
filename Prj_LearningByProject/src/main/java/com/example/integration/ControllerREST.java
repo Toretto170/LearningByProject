@@ -66,7 +66,6 @@ public class ControllerREST {
                 scorriListaFrasi++;
 			}
             
-            //scorriListaFrasi = 0;
             
             return ResponseEntity.ok(result);
         
