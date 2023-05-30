@@ -1,0 +1,30 @@
+/* Cambio il colore del testo di tutti gli elementi a nero */
+* {
+    color: black;
+  }
+  
+  /* Cambio il colore di sfondo della pagina a verde chiaro */
+  body {
+    background-color: lightgreen;
+  }
+  
+  /* Cambio il colore del titolo a verde scuro */
+  h1 {
+    color: darkgreen;
+  }
+  
+  /* Cambio il colore del bordo e del bottone a verde */
+  form, button {
+    border-color: green;
+    background-color: green;
+  }
+  
+  /* Cambio il colore del testo del bottone a bianco */
+  button {
+    color: white;
+  }
+  
+  /* Aggiungo un'ombra al form e al div del risultato */
+  form, #risultato {
+    box-shadow: 5px 5px 10px gray;
+  }
