@@ -1,73 +1,35 @@
-const fileInput = document.getElementById('fileInput');
-const textArea = document.getElementById('testo');
-const bottoneAnalisi = document.getElementById('analisi_testo');
-const analisiRisultato = document.getElementById('risultato');
-const classeImmettiFile = document.getElementsByClassName('immetti-file');
-const formRisposta = document.getElementById('form-risposta');
-
-
-
-//Eventlistener per attivare la funzione intoTextArea
-fileInput.addEventListener('change', intoTextArea);
-
-
-// Funzione per caricare il file nella textarea
-function intoTextArea(){
-
+// Funzione per caricare il file
+function leggiFile() {
+  return new Promise(function(resolve, reject) {
+    const fileInput = document.getElementById('fileInput');
     const file = fileInput.files[0];
     const reader = new FileReader();
+
     reader.onload = function(event) {
       var text = event.target.result;
       console.log(text);
-      textArea.value = text;
+      postFile(text)
+        .then(function() {
+          resolve();
+        })
+        .catch(function(error) {
+          reject(error);
+        });
     };
 
     reader.onerror = function(event) {
       console.error("Errore durante la lettura del file:", event.target.error);
+      reject(event.target.error);
     };
 
     reader.readAsText(file);
-
-};
-
-// Funzione per gestire la pagina una volta che si clicca Analisi
-function modificaPagina(){
-
-  textArea.setAttribute('readonly', true);
-  bottoneAnalisi.style.display = "none";
- 
-  for (var i = 0; i < classeImmettiFile.length; i++) {
-    classeImmettiFile[i].style.display = "none";
-  }
-
-  formRisposta.innerHTML += "<button type='button' class='btn btn-danger' id='reset-page' onclick='resetPage()'>RESET</button>"
-
+  });
 }
-
-//Funzione Reset per riutilizzare la pagina
-function resetPage(){
-
-  textArea.removeAttribute('readonly');
-  bottoneAnalisi.style.display = "";
-
-  for (var i = 0; i < classeImmettiFile.length; i++) {
-    classeImmettiFile[i].style.display = "";
-  }
-
-  textArea.value = "";
-  document.getElementById('reset-page').remove();
-  document.getElementById('risultato').remove();
-  document.getElementById('contenitore-risposta').innerHTML += "<div id='risultato' class='bg-light'></div>"
-  //formRisposta.style.display = "none";
-
-
-}
-
 
 // Connessione ad API via POST
-function postFile() {
-  
-  var text = textArea.value;
+function postFile(testo) {
+  var text = testo;
+
   return new Promise(function(resolve, reject) {
     const URLPOST = 'http://localhost:9020/api/process';
     let request = new XMLHttpRequest();
@@ -96,7 +58,6 @@ function postFile() {
 
 // Connessione ad API via GET
 function getFile() {
-  formRisposta.removeAttribute('style');
   return fetch('http://localhost:9020/api/analisi')
     .then(function(response) {
       if (response.ok) {
@@ -106,10 +67,11 @@ function getFile() {
       }
     })
     .then(function(data) {
+      var dataList = document.getElementById("analisi_testo");
       data.forEach(function(item) {
         var listItem = document.createElement("li");
         listItem.textContent = item;
-        analisiRisultato.appendChild(listItem);
+        dataList.appendChild(listItem);
       });
     })
     .catch(function(error) {
@@ -145,22 +107,13 @@ function deleteFile() {
   });
 }
 
-// Fa tutte e tre le cose e gestisce la modale di errore
+// Fa tutte e tre le cose
 function callAPI() {
-
-  if(textArea.value.replace(/\s+/g, "") == "") {
-    console.error("Errore: nessun testo da analizzare");
-    textArea.value = "";
-    $('#myModal').modal('show');}
-
-  else {
-  
-  postFile()
+  leggiFile()
     .then(function() {
       return getFile();
     })
     .then(function() {
-      modificaPagina();
       return deleteFile();
     })
     .then(function() {
@@ -169,5 +122,4 @@ function callAPI() {
     .catch(function(error) {
       console.error("Si è verificato un errore durante l'esecuzione delle operazioni:", error);
     });
-  }
 }

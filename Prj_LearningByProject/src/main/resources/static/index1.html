@@ -4,6 +4,10 @@
     <!-- Link al CDN di Bootstrap -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="style1.css">
+    
+    <!--Libreria Jquery per integrare Bootstrap-->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
 </head>
 <body>
     <i><h1>Benvenuti nel sito</h1></i>
@@ -13,8 +17,8 @@
         <div class="immetti-file">
             <p>Clicca sul pulsante "Scegli File per caricare il file txt e ti daremo un'analisi del contenuto del testo</p>
             <input type="file" id="fileInput" accept=".txt">
+            <p>Oppure inserisci il testo da analizzare nella casella qui sotto e clicca sul pulsante "Analizza".</p>
         </div>
-        <p>Oppure inserisci il testo da analizzare nella casella qui sotto e clicca sul pulsante "Analizza".</p>
         <!-- Form per inserire il testo da analizzare -->
         <form>
             <!-- Textarea per scrivere il testo -->
@@ -26,12 +30,48 @@
         <div class="analisi">
             <!-- Pulsante per avviare l'analisi -->
             <button type="button" class="btn btn-primary"
-            id="analisi_testo" onclick="callAPI()">Analizza</button>
+            id="analisi_testo" onclick="callAPI()"
+            >Analizza</button>
+        
         </div>
+        <form id="form-risposta" style="display: none">
         <!-- Div per mostrare il risultato dell'analisi -->
-        <div id="risultato"></div>
+        <div class="form-group" id="contenitore-risposta">
+        <div id="risultato" class="bg-light"></div>
+        </div>
+        </form>
+
+    <footer></footer>
+
+    <!--Modale Popup che si attiva se Analizzo senza testo-->
+    <!-- Bottone per aprire il popup -->
+
+  <!-- Modal -->
+  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title text-danger" id="myModalLabel">ERRORE</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body text-center">
+          Nessun testo da analizzare!
+        </div>
+        <div class="modal-footer justify-content-center">
+          <button type="button" class="btn btn-danger" data-dismiss="modal">Chiudi</button>
+        </div>
+      </div>
     </div>
+  </div>
+  
+
+
+
 </body>
+<!--Script per usare le funzioni di Bootstrap-->
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <!-- Script per inviare il testo al server e ricevere l'analisi -->
 <script src="main.js"></script>
 </html>

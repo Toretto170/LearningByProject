@@ -26,6 +26,13 @@ label {
   color: white;
 }
 
+/* Cambio l'intestazione degli li che si generano dall'analisi*/
+li {
+ 
+  padding: 2%;
+
+}
+
 /*cambio lo stile del testo in obliquo*/
 p {
   font-style: italic;
@@ -54,5 +61,15 @@ input::file-selector-button {
   border-radius: 5px;
   border: 0px;
   background-color: rgb(76, 174, 76);
+}
+
+/*Per centrare la scritta ERRORE nel popup*/
+.modal-title {
+  position: absolute;
+  top: 15%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  text-align: center;
 }
 
