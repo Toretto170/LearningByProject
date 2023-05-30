@@ -1,86 +1,125 @@
-function processFile() {
-      
-      /////Chiamata all'api POST
-      const fileInput = document.getElementById('fileInput');
-      const file = fileInput.files[0];
+// Funzione per caricare il file
+function leggiFile() {
+  return new Promise(function(resolve, reject) {
+    const fileInput = document.getElementById('fileInput');
+    const file = fileInput.files[0];
+    const reader = new FileReader();
 
-      const reader = new FileReader();
-      reader.onload = function(e) {
-        const text = e.target.result;
+    reader.onload = function(event) {
+      var text = event.target.result;
+      console.log(text);
+      postFile(text)
+        .then(function() {
+          resolve();
+        })
+        .catch(function(error) {
+          reject(error);
+        });
+    };
 
-        const url = 'http://localhost:9020/api/process';
+    reader.onerror = function(event) {
+      console.error("Errore durante la lettura del file:", event.target.error);
+      reject(event.target.error);
+    };
 
-        const xhr = new XMLHttpRequest();
-        xhr.open('POST', url);
-        xhr.setRequestHeader('Content-Type', 'text/plain');
-        xhr.onload = function() {
-          if (xhr.status === 200) {
-            console.log('Risposta:', xhr.responseText);
-
-          } else {
-            console.error('Errore:', xhr.status);
-          }
-        };
-        xhr.onerror = function() {
-          console.error('Errore di rete');
-        };
-        xhr.send(text);
-      };
-     
-      reader.readAsText(file);
-
-};
-
-function getAnalisi() {
-  //Scarica le analisi:
-  const urlget = 'http://localhost:9020/api/analisi'
-  fetch(urlget)
-  .then(function(response) {
-    if (response.ok) {
-      return response.json();
-    } else {
-      throw new Error("Errore durante la richiesta");
-    }
-  })
-  .then(function(data) {
-    var dataList = document.getElementById("analisi_testo");
-    data.forEach(function(item) {
-      var listItem = document.createElement("li");
-      listItem.textContent = item;
-      dataList.appendChild(listItem);
-    });
-  })
-  .catch(function(error) {
-    console.error(error);
+    reader.readAsText(file);
   });
-};
+}
 
-function svuotaTabelle() {
-  
-  const urldelete = 'http://localhost:9020/api/svuota'
-  fetch(urldelete, {
-    method: 'DELETE',
-    headers: {
-      'Content-Type': 'application/json',
-      // Altri header se necessari
-    },
-    body: JSON.stringify({
-      // Dati da inviare nel corpo della richiesta, se necessari
-    })
-  })
-    .then(response => {
-      if (response.ok) {
-        // Gestisci la risposta del server in caso di successo
-        console.log('Eliminazione effettuata con successo!');
+// Connessione ad API via POST
+function postFile(testo) {
+  var text = testo;
+
+  return new Promise(function(resolve, reject) {
+    const URLPOST = 'http://localhost:9020/api/process';
+    let request = new XMLHttpRequest();
+
+    request.open('POST', URLPOST);
+    request.setRequestHeader('Content-Type', 'text/plain');
+
+    request.onload = function() {
+      if (request.status === 200) {
+        console.log("Il file è stato caricato correttamente.");
+        resolve();
       } else {
-        // Gestisci la risposta del server in caso di errore
-        console.log('Si è verificato un errore durante l\'eliminazione.');
+        console.error("Il file non è stato caricato. La richiesta non è andata a buon fine. Codice Errore:", request.statusText);
+        reject(new Error(request.statusText));
+      }
+    };
+
+    request.onerror = function() {
+      console.error('Il file non è stato caricato. La richiesta non è riuscita ad essere inviata');
+      reject(new Error('Errore di connessione'));
+    };
+
+    request.send(text);
+  });
+}
+
+// Connessione ad API via GET
+function getFile() {
+  return fetch('http://localhost:9020/api/analisi')
+    .then(function(response) {
+      if (response.ok) {
+        return response.json();
+      } else {
+        throw new Error("Errore durante la richiesta");
       }
     })
-    .catch(error => {
-      // Gestisci eventuali errori di connessione o eccezioni
-      console.log('Si è verificato un errore:', error);
+    .then(function(data) {
+      var dataList = document.getElementById("analisi_testo");
+      data.forEach(function(item) {
+        var listItem = document.createElement("li");
+        listItem.textContent = item;
+        dataList.appendChild(listItem);
+      });
+    })
+    .catch(function(error) {
+      console.error(error);
     });
-  
-};
+}
 
+// Connessione ad API via DELETE
+function deleteFile() {
+  return new Promise(function(resolve, reject) {
+    const URLDELETE = 'http://localhost:9020/api/svuota';
+    let request = new XMLHttpRequest();
+
+    request.open('DELETE', URLDELETE);
+    request.setRequestHeader('Content-Type', 'application/json');
+
+    request.onload = function() {
+      if (request.status === 200) {
+        console.log("Il file è stato eliminato correttamente.");
+        resolve();
+      } else {
+        console.error("Il file non è stato eliminato. La richiesta non è andata a buon fine. Codice Errore:", request.statusText);
+        reject(new Error(request.statusText));
+      }
+    };
+
+    request.onerror = function() {
+      console.error('Il file non è stato eliminato. La richiesta non è riuscita ad essere inviata');
+      reject(new Error('Errore di connessione'));
+    };
+
+    request.send();
+  });
+}
+
+// Fa tutte e tre le cose
+function callAPI() {
+  leggiFile()
+    .then(function() {
+      return getFile();
+    })
+    .then(function() {
+      return deleteFile();
+    })
+    .then(function() {
+      console.log("Tutte le operazioni sono state completate con successo.");
+    })
+    .catch(function(error) {
+      console.error("Si è verificato un errore durante l'esecuzione delle operazioni:", error);
+    });
+}
