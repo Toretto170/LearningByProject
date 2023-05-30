@@ -72,6 +72,8 @@ function getFile() {
         var listItem = document.createElement("li");
         listItem.textContent = item;
         dataList.appendChild(listItem);
+          dataList.style.backgroundColor = ' rgb(76, 174, 76)';
+          dataList.style.
       });
     })
     .catch(function(error) {
