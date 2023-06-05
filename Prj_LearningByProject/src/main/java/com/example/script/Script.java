@@ -9,40 +9,60 @@ import java.io.IOException;
 public class Script {
 	
 	// Costruisce un'espressione regolare che rappresenta una scelta tra una lista di stringhe
-	private static String buildRegexOR(String[] list) {
+	private static String buildRegexOR(List<String> tempList) {
 		// NON utilizzare
+		ArrayList<String> list = new ArrayList<String>(tempList);
 		String toReturn = "(";
-		String[] temp = {".", "?", "s", "n", "r"};
-		List<String> needEscapeChar = Arrays.asList(temp);
+		List<String> needEscapeChar = Arrays.asList(new String[]{".", "?", "s", "n", "r", "r n"});
 		for (String string : list) {
 			if (needEscapeChar.contains(string)) {
-				toReturn += "\\\\";
+				if (string.contains(" ")) {
+					string = " "+string;
+					string = string.replaceAll(" ", "\\\\\\\\");
+				}else {toReturn += "\\\\";}
 			}
-			toReturn += string + "|";
+			
+			if (list.indexOf(string) == list.size()-1 || list.size() == 1){
+				toReturn += string;
+			} else{
+				toReturn += string + "|";
+			}
 		}
-		return toReturn + ")";
+		toReturn += ")";
+		System.out.println(toReturn);
+		return toReturn;
 	}
 
 	// Legge il testo e crea una Lista di frasi formata ognuna da una lista di parole
 	public static List<Frase> leggiPerFrasiParole(String text) throws ScriptException {
+		// TODO check buildRegexOR behavior 
 		List<Frase> testo = new ArrayList<>();
 		try {
-			String[] preRegex = {".", "?", "!", ";"};
-			List<String> frases = Arrays.asList(text.replaceAll("((\\r\\n)|(\\n))", "")
-					.split("(\\.|\\?|!|;)(\\s)*")); // divide quando . ; ? ! seguito da 0 o più spazi
-
+			// String[] preRegex = {".", "?", "!", ";"};
+			List<String> frases = Arrays.asList(
+				text.replaceAll(
+					buildRegexOR(Arrays.asList("r n","n")),
+					" "
+				)
+				.split(
+					buildRegexOR(Arrays.asList(".", "?", "!", ";"))+ // divide quando . ; ? ! seguito da 0 o più spazi
+					"(\\s)*"
+				)
+			); 
+			
+			//buildRegexOR(Arrays.asList(",", ":", "\"", "-", "'", "“", "”"));
 			for (String string : frases) {
-				Frase aa = new Frase(Arrays.asList(
-						string.replaceAll("(,|:|\\\"|-)", "")
-								.replaceAll("\\'", " ")
-								.split(" ")));
+				System.out.println("\nFrase x \n"+string);
+				String[] a = string
+								.replaceAll("(,|:|\"|-|\\'|“|”)", " ")
+								.strip()
+								.split("(\s)+");
+				Frase aa = new Frase(Arrays.asList(a)); // split when one or more spaces are found
 				testo.add(aa);
-			}
-
+			} 
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
 		return testo;
 	}
 	
