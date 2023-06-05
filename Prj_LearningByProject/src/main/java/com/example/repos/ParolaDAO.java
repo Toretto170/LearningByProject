@@ -27,7 +27,7 @@ public interface ParolaDAO extends JpaRepository<Parola, Integer>{
 	@Query(value = "SELECT testo_parola FROM parola WHERE LENGTH(testo_parola) = (SELECT MAX(LENGTH(testo_parola)) FROM parola );", nativeQuery = true)	 
 	ArrayList<String> getContenutoParolaPiuLunga();
 
-	@Query(value = "SELECT testo_parola FROM parola WHERE LENGTH(testo_parola) = (SELECT MIN(LENGTH(testo_parola)) FROM parola );", nativeQuery = true)	 
+	@Query(value = "SELECT DISTINCT testo_parola FROM parola WHERE LENGTH(testo_parola) = (SELECT MIN(LENGTH(testo_parola)) FROM parola );", nativeQuery = true)	 
 	ArrayList<String> getContenutoParolaPiuBreve();
 	 
 	@Query(value = "SELECT COUNT(*) AS numero_parole FROM parola;", nativeQuery = true)	 

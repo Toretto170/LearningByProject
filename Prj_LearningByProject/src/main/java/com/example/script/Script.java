@@ -29,7 +29,6 @@ public class Script {
 			}
 		}
 		toReturn += ")";
-		System.out.println(toReturn);
 		return toReturn;
 	}
 
@@ -39,24 +38,35 @@ public class Script {
 		List<Frase> testo = new ArrayList<>();
 		try {
 			// String[] preRegex = {".", "?", "!", ";"};
-			List<String> frases = Arrays.asList(
-				text.replaceAll(
-					buildRegexOR(Arrays.asList("r n","n")),
-					" "
-				)
-				.split(
-					buildRegexOR(Arrays.asList(".", "?", "!", ";"))+ // divide quando . ; ? ! seguito da 0 o più spazi
-					"(\\s)*"
-				)
-			); 
-			
+			//List<String> frases = Arrays.asList(
+			//	text.replaceAll(
+			//		buildRegexOR(Arrays.asList("r n","n")),
+			//		" "
+			//	).split(
+			//		buildRegexOR(Arrays.asList(".", "?", "!", ";"))+ // divide quando . ; ? ! seguito da 0 o più spazi
+			//		"(\\s)*"
+			//	)
+			//); 
+			List<String> frases = leggiPerFrasi(text);
+			// (?<=[.!?])\\s+|\\n+
 			//buildRegexOR(Arrays.asList(",", ":", "\"", "-", "'", "“", "”"));
 			for (String string : frases) {
-				System.out.println("\nFrase x \n"+string);
+				System.out.println("\ndiocaneFrase x \n");
+				for (String string2 : string.replaceAll("\\.|\\?|!|;", "").replaceAll("(,|:|\"|-|\\'|“|”)", " ").strip().split("(\\s)+")) {
+					System.out.println(string2);
+				}
 				String[] a = string
-								.replaceAll("(,|:|\"|-|\\'|“|”)", " ")
-								.strip()
-								.split("(\s)+");
+					.replaceAll(buildRegexOR(Arrays.asList(".", "?", "!", ";")), "")
+					.replaceAll("(,|:|\"|-|\\'|“|”)", " ")
+					.strip()
+					.split("(\\s)+");
+				/* 
+				String[] a = string
+					.replaceAll("."+buildRegexOR(Arrays.asList(".", "?", "!", ";"))+"((.)|(\\s))", "") // (?=\\.|\\?|!|;)(?=.|\\s)
+					.replaceAll("(,|:|\"|-|\\'|“|”)", " ")
+					.strip()
+					.split("(\s)+"); 
+				*/
 				Frase aa = new Frase(Arrays.asList(a)); // split when one or more spaces are found
 				testo.add(aa);
 			} 
@@ -74,7 +84,7 @@ public class Script {
 	    text = text.trim();
 
 	    // Crea un delimitatore basato sulla punteggiatura comune delle frasi
-	    String delimiter = "(?<=[.!?])\\s+|\\n+";
+	    String delimiter = "(?<=[.!?;])\\s+|\\n+";
 
 	    // Dividi il testo in frasi utilizzando il delimitatore
 	    String[] splitText = text.split(delimiter);
