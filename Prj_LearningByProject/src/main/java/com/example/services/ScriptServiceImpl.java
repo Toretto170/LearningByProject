@@ -68,7 +68,7 @@ public class ScriptServiceImpl implements ScriptService {
 
 		for (int c=1; c<=numeroFrasi; c++) {
 			
-			analisi.add("La parola o parole più usata/e per '" + fraseDao.getTestoFrase(c) + "' sono:" + (stampaArraylist(parolaDao.getParolaPiuUsataInOgniFrase(c))) + "per " + parolaDao.getNumeroParolaPiuUsataInOgniFrase(c) + " volta/e");
+			analisi.add("La parola o parole più usata/e per '" + fraseDao.getTestoFrase(c) + "' sono: " + (stampaArraylist(parolaDao.getParolaPiuUsataInOgniFrase(c))) + "per " + parolaDao.getNumeroParolaPiuUsataInOgniFrase(c) + " volta/e");
 			
 		}
 		

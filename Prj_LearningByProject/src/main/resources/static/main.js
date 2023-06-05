@@ -80,16 +80,17 @@ function postFile() {
 
     request.onload = function() {
       if (request.status === 200) {
-        console.log("Il file è stato caricato correttamente.");
+        console.log("File caricato correttamente.");
         resolve();
       } else {
-        console.error("Il file non è stato caricato. La richiesta non è andata a buon fine. Codice Errore:", request.statusText);
+        console.error("File non caricato. Richiesta POST non andata a buon fine. Codice Errore:", request.statusText);
         reject(new Error(request.statusText));
+        deleteFile();
       }
     };
 
     request.onerror = function() {
-      console.error('Il file non è stato caricato. La richiesta non è riuscita ad essere inviata');
+      console.error('File non caricato. Richiesta POST non risulta essere inviata');
       reject(new Error('Errore di connessione'));
     };
 
@@ -103,9 +104,10 @@ function getFile() {
   return fetch('http://localhost:9020/api/analisi')
     .then(function(response) {
       if (response.ok) {
+      	console.log("Dati scaricati correttamente.");
         return response.json();
       } else {
-        throw new Error("Errore durante la richiesta");
+        throw new Error("Errore durante la richiesta GET");
       }
     })
     .then(function(data) {
@@ -131,16 +133,16 @@ function deleteFile() {
 
     request.onload = function() {
       if (request.status === 200) {
-        console.log("Il file è stato eliminato correttamente.");
+        console.log("File eliminato correttamente.");
         resolve();
       } else {
-        console.error("Il file non è stato eliminato. La richiesta non è andata a buon fine. Codice Errore:", request.statusText);
+        console.error("File non eliminato. Richiesta DELETE non andata a buon fine. Codice Errore:", request.statusText);
         reject(new Error(request.statusText));
       }
     };
 
     request.onerror = function() {
-      console.error('Il file non è stato eliminato. La richiesta non è riuscita ad essere inviata');
+      console.error('File non eliminato. Richiesta DELETE non risulta essere inviata');
       reject(new Error('Errore di connessione'));
     };
 
@@ -170,7 +172,7 @@ function callAPI() {
       console.log("Tutte le operazioni sono state completate con successo.");
     })
     .catch(function(error) {
-      console.error("Si è verificato un errore durante l'esecuzione delle operazioni:", error);
+      console.error("Errore durante l'esecuzione delle operazioni:", error);
     });
   }
 }
