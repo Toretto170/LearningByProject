@@ -49,6 +49,7 @@ public class ControllerREST {
             
             //Contatore necessario per riuscire ad asscociare le parole alle frasi
             int scorriListaFrasi = 0;
+            System.out.println(scorriListaFrasi);
 
             // Per ogni frase dammi la lista di parole in esso contenuta
             for (Frase frase : result) {
