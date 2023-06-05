@@ -1,7 +1,6 @@
 const fileInput = document.getElementById('fileInput');
 const textArea = document.getElementById('testo');
 const bottoneAnalisi = document.getElementById('analisi_testo');
-const analisiRisultato = document.getElementById('risultato');
 const classeImmettiFile = document.getElementsByClassName('immetti-file');
 const formRisposta = document.getElementById('form-risposta');
 
@@ -45,21 +44,25 @@ function modificaPagina(){
 }
 
 //Funzione Reset per riutilizzare la pagina
-function resetPage(){
-
+function resetPage() {
+  textArea.value = "";
   textArea.removeAttribute('readonly');
-  bottoneAnalisi.style.display = "";
-
+  bottoneAnalisi.style.display = "block";
+  
   for (var i = 0; i < classeImmettiFile.length; i++) {
-    classeImmettiFile[i].style.display = "";
+    classeImmettiFile[i].style.display = "block";
+  }
+  
+  // Rimuovi il bottone di reset
+  var resetButton = document.getElementById('reset-page');
+  resetButton.parentNode.removeChild(resetButton);
+
+  // Rimuovi gli elementi aggiunti dalla funzione getFile()
+  while (document.getElementById('risultato').firstChild) {
+    document.getElementById('risultato').removeChild(document.getElementById('risultato').firstChild);
   }
 
-  textArea.value = "";
-  document.getElementById('reset-page').remove();
-  document.getElementById('risultato').remove();
-  document.getElementById('contenitore-risposta').innerHTML += "<div id='risultato' class='bg-light'></div>"
-  //formRisposta.style.display = "none";
-
+  formRisposta.style.display = "none";
 
 }
 
@@ -109,7 +112,7 @@ function getFile() {
       data.forEach(function(item) {
         var listItem = document.createElement("li");
         listItem.textContent = item;
-        analisiRisultato.appendChild(listItem);
+        document.getElementById('risultato').appendChild(listItem);
       });
     })
     .catch(function(error) {
