@@ -85,7 +85,8 @@ function postFile() {
       } else {
         console.error("File non caricato. Richiesta POST non andata a buon fine. Codice Errore:", request.statusText);
         reject(new Error(request.statusText));
-        deleteFile();
+        //Cancella il db quando si crasha
+        //deleteFile();
       }
     };
 
