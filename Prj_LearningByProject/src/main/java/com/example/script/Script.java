@@ -48,22 +48,22 @@ public class Script {
 	
 	// Suddivide il testo in frasi con punteggiatura e restituisce una lista di frasi
 	public static List<String> leggiPerFrasi(String text) {
-        List<String> sentences = new ArrayList<>();
+	    List<String> sentences = new ArrayList<>();
 
-        // Rimuovi eventuali spazi bianchi all'inizio e alla fine del testo
-        text = text.trim();
+	    // Rimuovi eventuali spazi bianchi all'inizio e alla fine del testo
+	    text = text.trim();
 
-        // Crea un delimitatore basato sulla punteggiatura comune delle frasi
-        String delimiter = "(?<=[.!?])\\s+";
+	    // Crea un delimitatore basato sulla punteggiatura comune delle frasi
+	    String delimiter = "(?<=[.!?])\\s+|\\n+";
 
-        // Dividi il testo in frasi utilizzando il delimitatore
-        String[] splitText = text.split(delimiter);
+	    // Dividi il testo in frasi utilizzando il delimitatore
+	    String[] splitText = text.split(delimiter);
 
-        // Aggiungi le frasi alla lista
-        for (String sentence : splitText) {
-            sentences.add(sentence.trim());
-        }
+	    // Aggiungi le frasi alla lista
+	    for (String sentence : splitText) {
+	        sentences.add(sentence.trim());
+	    }
 
-        return sentences;
-    }
+	    return sentences;
+	}
 }
