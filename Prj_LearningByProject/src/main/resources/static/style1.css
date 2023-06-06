@@ -1,6 +1,9 @@
-/* Cambio il colore di sfondo della pagina a verde chiaro */
+/* Cambio lo sfondo della pagina */
 body {
-  background-color: lightgreen;
+  background-image: url('https://i.imgur.com/uV25Hl2.jpg');
+  background-repeat: no-repeat;
+	background-attachment: fixed;
+	background-size: 100vw 100vw;
 }
 
 /* Cambio il colore del titolo e del testo a verde scuro */
@@ -36,19 +39,14 @@ h1 {
   text-align: center;
 }
 
-/* Aggiungo un'ombra al form e al div del risultato
-button, form, #risultato {
-  box-shadow: 5px 5px 10px gray;
-  border-radius: 25px;
-}
-*/
-
+/*cambio lo stile della scritta 'testo'*/
 #testo {
   font-weight: lighter ;
   font-family: Arial, Helvetica, sans-serif;
 }
 
-input::file-selector-button {
+/*cambio lo stile del pulsante per l'analisi del testo*/
+#analisi_testo, input::file-selector-button {
   color: white;
   font-weight: 500;
   border-radius: 5px;
@@ -57,3 +55,8 @@ input::file-selector-button {
   padding: 5px;
 }
 
+/*cambio lo stile dei pulsanti quando il cursore ci passa sopra*/
+#analisi_testo:hover, input::file-selector-button:hover {
+  background-color: darkgreen;
+  cursor: pointer;
+}
