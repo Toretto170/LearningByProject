@@ -3,7 +3,7 @@ const textArea = document.getElementById('testo');
 const bottoneAnalisi = document.getElementById('analisi_testo');
 const classeImmettiFile = document.getElementsByClassName('immetti-file');
 const formRisposta = document.getElementById('form-risposta');
-
+const formRichiesta = document.getElementsByClassName('analisi')[0];
 
 
 //Eventlistener per attivare la funzione intoTextArea
@@ -39,8 +39,14 @@ function modificaPagina(){
     classeImmettiFile[i].style.display = "none";
   }
 
-  formRisposta.innerHTML += "<button type='button' class='btn btn-danger' id='reset-page' onclick='resetPage()'>RESET</button>"
-
+  // formRichiesta.innerHTML += "<button type='button' class='btn btn-danger' id='reset-page' onclick='resetPage()'>RESET</button>"
+  newBtn = document.createElement('button')
+  newBtn.classList.add('btn')
+  newBtn.classList.add('btn-danger') 
+  newBtn.id = 'reset-page'
+  newBtn.setAttribute("onclick","resetPage();")
+  newBtn.textContent = 'RESET'
+  formRichiesta.appendChild(newBtn)
 }
 
 //Funzione Reset per riutilizzare la pagina
