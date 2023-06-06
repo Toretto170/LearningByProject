@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.example.entities.Frase;
@@ -31,6 +32,9 @@ public interface FraseDAO extends JpaRepository<Frase, Integer>{
 	    
 	    @Query(value = "SELECT COUNT(*) AS numero_frasi FROM frase", nativeQuery = true)	    
 	    int getNumeroFrasi();
+	    
+	    @Query(value = "SELECT testo_frase FROM frase WHERE id = :fraseId", nativeQuery = true)	    
+	    String getTestoFrase(@Param("fraseId") int fraseId);
 	    
 	    
 	    @Modifying

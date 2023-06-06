@@ -15,7 +15,7 @@ public class Frase {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	
-	@Column
+	@Column(columnDefinition = "MEDIUMTEXT")
 	private String testoFrase;
 
 	public int getId() {

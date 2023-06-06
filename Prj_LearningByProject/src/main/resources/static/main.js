@@ -1,35 +1,82 @@
-// Funzione per caricare il file
-function leggiFile() {
-  return new Promise(function(resolve, reject) {
-    const fileInput = document.getElementById('fileInput');
+const fileInput = document.getElementById('fileInput');
+const textArea = document.getElementById('testo');
+const bottoneAnalisi = document.getElementById('analisi_testo');
+const classeImmettiFile = document.getElementsByClassName('immetti-file');
+const formRisposta = document.getElementById('form-risposta');
+const formRichiesta = document.getElementsByClassName('analisi')[0];
+
+
+//Eventlistener per attivare la funzione intoTextArea
+fileInput.addEventListener('change', intoTextArea);
+
+
+// Funzione per caricare il file nella textarea
+function intoTextArea(){
+
     const file = fileInput.files[0];
     const reader = new FileReader();
-
     reader.onload = function(event) {
       var text = event.target.result;
       console.log(text);
-      postFile(text)
-        .then(function() {
-          resolve();
-        })
-        .catch(function(error) {
-          reject(error);
-        });
+      textArea.value = text;
     };
 
     reader.onerror = function(event) {
       console.error("Errore durante la lettura del file:", event.target.error);
-      reject(event.target.error);
     };
 
     reader.readAsText(file);
-  });
+
+};
+
+// Funzione per gestire la pagina una volta che si clicca Analisi
+function modificaPagina(){
+
+  textArea.setAttribute('readonly', true);
+  bottoneAnalisi.style.display = "none";
+ 
+  for (var i = 0; i < classeImmettiFile.length; i++) {
+    classeImmettiFile[i].style.display = "none";
+  }
+
+  // formRichiesta.innerHTML += "<button type='button' class='btn btn-danger' id='reset-page' onclick='resetPage()'>RESET</button>"
+  newBtn = document.createElement('button')
+  newBtn.classList.add('btn')
+  newBtn.classList.add('btn-danger') 
+  newBtn.id = 'reset-page'
+  newBtn.setAttribute("onclick","resetPage();")
+  newBtn.textContent = 'RESET'
+  formRichiesta.appendChild(newBtn)
 }
 
-// Connessione ad API via POST
-function postFile(testo) {
-  var text = testo;
+//Funzione Reset per riutilizzare la pagina
+function resetPage() {
+  textArea.value = "";
+  textArea.removeAttribute('readonly');
+  bottoneAnalisi.style.display = "block";
+  
+  for (var i = 0; i < classeImmettiFile.length; i++) {
+    classeImmettiFile[i].style.display = "block";
+  }
+  
+  // Rimuovi il bottone di reset
+  var resetButton = document.getElementById('reset-page');
+  resetButton.parentNode.removeChild(resetButton);
 
+  // Rimuovi gli elementi aggiunti dalla funzione getFile()
+  while (document.getElementById('risultato').firstChild) {
+    document.getElementById('risultato').removeChild(document.getElementById('risultato').firstChild);
+  }
+
+  formRisposta.style.display = "none";
+
+}
+
+
+// Connessione ad API via POST
+function postFile() {
+  
+  var text = textArea.value;
   return new Promise(function(resolve, reject) {
     const URLPOST = 'http://localhost:9020/api/process';
     let request = new XMLHttpRequest();
@@ -39,16 +86,18 @@ function postFile(testo) {
 
     request.onload = function() {
       if (request.status === 200) {
-        console.log("Il file è stato caricato correttamente.");
+        console.log("File caricato correttamente.");
         resolve();
       } else {
-        console.error("Il file non è stato caricato. La richiesta non è andata a buon fine. Codice Errore:", request.statusText);
+        console.error("File non caricato. Richiesta POST non andata a buon fine. Codice Errore:", request.statusText);
         reject(new Error(request.statusText));
+        //Cancella il db quando si crasha
+        //deleteFile();
       }
     };
 
     request.onerror = function() {
-      console.error('Il file non è stato caricato. La richiesta non è riuscita ad essere inviata');
+      console.error('File non caricato. Richiesta POST non risulta essere inviata');
       reject(new Error('Errore di connessione'));
     };
 
@@ -58,22 +107,23 @@ function postFile(testo) {
 
 // Connessione ad API via GET
 function getFile() {
+  formRisposta.removeAttribute('style');
   return fetch('http://localhost:9020/api/analisi')
     .then(function(response) {
       if (response.ok) {
+      	console.log("Dati scaricati correttamente.");
         return response.json();
       } else {
-        throw new Error("Errore durante la richiesta");
+        throw new Error("Errore durante la richiesta GET");
       }
     })
     .then(function(data) {
-      var dataList = document.getElementById("analisi_testo");
       data.forEach(function(item) {
         var listItem = document.createElement("li");
         listItem.textContent = item;
-        dataList.appendChild(listItem);
-          // Stile risposta
-          dataList.style.backgroundColor = ' rgb(76, 174, 76)';
+        document.getElementById('risultato').appendChild(listItem);
+         // Stile risposta
+         listItem.style.backgroundColor = ' rgb(76, 174, 76)';
       });
     })
     .catch(function(error) {
@@ -92,16 +142,16 @@ function deleteFile() {
 
     request.onload = function() {
       if (request.status === 200) {
-        console.log("Il file è stato eliminato correttamente.");
+        console.log("File eliminato correttamente.");
         resolve();
       } else {
-        console.error("Il file non è stato eliminato. La richiesta non è andata a buon fine. Codice Errore:", request.statusText);
+        console.error("File non eliminato. Richiesta DELETE non andata a buon fine. Codice Errore:", request.statusText);
         reject(new Error(request.statusText));
       }
     };
 
     request.onerror = function() {
-      console.error('Il file non è stato eliminato. La richiesta non è riuscita ad essere inviata');
+      console.error('File non eliminato. Richiesta DELETE non risulta essere inviata');
       reject(new Error('Errore di connessione'));
     };
 
@@ -109,19 +159,29 @@ function deleteFile() {
   });
 }
 
-// Fa tutte e tre le cose
+// Fa tutte e tre le cose e gestisce la modale di errore
 function callAPI() {
-  leggiFile()
+
+  if(textArea.value.replace(/\s+/g, "") == "") {
+    console.error("Errore: nessun testo da analizzare");
+    textArea.value = "";
+    $('#myModal').modal('show');}
+
+  else {
+  
+  postFile()
     .then(function() {
       return getFile();
     })
     .then(function() {
+      modificaPagina();
       return deleteFile();
     })
     .then(function() {
       console.log("Tutte le operazioni sono state completate con successo.");
     })
     .catch(function(error) {
-      console.error("Si è verificato un errore durante l'esecuzione delle operazioni:", error);
+      console.error("Errore durante l'esecuzione delle operazioni:", error);
     });
+  }
 }
