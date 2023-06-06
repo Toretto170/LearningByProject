@@ -3,7 +3,7 @@ body {
   background-image: url('https://i.imgur.com/uV25Hl2.jpg');
   background-repeat: no-repeat;
 	background-attachment: fixed;
-	background-size: 100vw 100vw;
+	height: fit-content;
 }
 
 /* Cambio il colore del titolo e del testo a verde scuro */
