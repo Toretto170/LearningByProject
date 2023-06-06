@@ -122,6 +122,8 @@ function getFile() {
         var listItem = document.createElement("li");
         listItem.textContent = item;
         document.getElementById('risultato').appendChild(listItem);
+         // Stile risposta
+         listItem.style.backgroundColor = ' rgb(76, 174, 76)';
       });
     })
     .catch(function(error) {
