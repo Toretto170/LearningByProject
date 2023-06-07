@@ -191,18 +191,16 @@ public class ScriptServiceImpl implements ScriptService {
 	}
 
 	@Override
-	public Map<String, Integer> helpGetParolaPiuUsataPerFraseJSON(int indexFrase) {
+	public Map<Integer, ArrayList<String>> helpGetParolaPiuUsataPerFraseJSON(int indexFrase) {
 		
-		Map<String, Integer> map4 = new HashMap<>();
+		Map<Integer, ArrayList<String>> map4 = new HashMap<>();
 		ArrayList<String> lista2 = new ArrayList<>();
 		lista2 = parolaDao.getParolaPiuUsataInOgniFrase(indexFrase);
 		
+			
+			map4.put(parolaDao.getNumeroParolaPiuUsataInOgniFrase(indexFrase), lista2);
+			
 		
-		for (int i = 0; i < lista2.size(); i++) {
-			
-			map4.put(lista2.get(i),parolaDao.getNumeroParolaPiuUsataInOgniFrase(indexFrase));
-			
-		}
 		
 				
 		return map4;
