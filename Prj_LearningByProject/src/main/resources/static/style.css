@@ -31,8 +31,12 @@ label {
 
 /* Cambio l'intestazione degli li che si generano dall'analisi*/
 li {
-  padding: 2%;
+  padding: 5px;
+  color: white;
+  font-family: Arial, Helvetica, sans-serif;
+  background-color: rgb(76, 174, 76);
 }
+
 
 /*cambio lo stile del testo in obliquo*/
 p {
@@ -44,7 +48,14 @@ h1 {
   text-align: center;
 }
 
+#reset-page {
+  padding: 5px;
+  font-weight: bold;
+}
 
+#contenitore-risposta {
+  margin-top: 20px;
+}
 
 #testo {
   font-weight: lighter ;
