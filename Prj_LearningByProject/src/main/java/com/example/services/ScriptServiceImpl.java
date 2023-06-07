@@ -40,6 +40,7 @@ public class ScriptServiceImpl implements ScriptService {
         return fraseDao.save(f);
     }
     
+    
     @Override
     public ArrayList<String> analisi() {
 		
@@ -47,36 +48,50 @@ public class ScriptServiceImpl implements ScriptService {
 		int numeroFrasi = fraseDao.getNumeroFrasi();
 
     	    	
-		analisi.add("Numero di caratteri nel testo: " + fraseDao.getNumeroCaratteriTotali());
-		analisi.add("Numero di lettere nel testo: " + parolaDao.getNumeroLettereTotali());
-		analisi.add("Numero di frasi nel testo: " + fraseDao.getNumeroFrasi());
 		analisi.add("Numero di parole nel testo: " +  parolaDao.getNumeroParole());
-		analisi.add("Numero medio caratteri per frase: " + fraseDao.getNumeroMedioCaratteriPerFrase());
-		analisi.add("Numero medio caratteri per parola: " + parolaDao.getNumeroMedioCaratteriPerParola());
-		analisi.add("Numero medio di parole per frase: " + parolaDao.getNumeroMedioParolePerFrase());
-		analisi.add("Numero di caratteri della frase più lunga: " + fraseDao.getNumeroCaratteriFrasePiuLunga());
-		analisi.add("Numero di caratteri della frase più breve: " + fraseDao.getNumeroCaratteriFrasePiuCorta());
-		analisi.add("Numero di caratteri della parola più lunga: " + parolaDao.getNumeroCaratteriParolaPiuLunga());
-		analisi.add("Numero di caratteri della parola più breve: " + parolaDao.getNumeroCaratteriParolaPiuCorta());
+		analisi.add("Numero di frasi nel testo: " + fraseDao.getNumeroFrasi());
 		
-    	//Possono esserci risultati multipli
-    	analisi.add("La frase più lunga risulta essere: " + stampaArraylist(fraseDao.getContenutoFrasePiuLunga()));
-		analisi.add("La frase più breve risulta essere: " + stampaArraylist(fraseDao.getContenutoFrasePiuBreve()));
-		analisi.add("La parola più lunga risulta essere: " + stampaArraylist(parolaDao.getContenutoParolaPiuLunga()));
-		analisi.add("La parola più breve risulta essere: " + stampaArraylist(parolaDao.getContenutoParolaPiuBreve()));
-		analisi.add("La parola o parole più usata/e nel testo: " + stampaArraylist(parolaDao.getParolaPiuUsataTesto()) + "per " + parolaDao.getNumeroParolaPiuUsataTesto() + " volta/e");
-
 		for (int i=1; i<=numeroFrasi; i++) {
 			
 			analisi.add("Per la frase '" + fraseDao.getTestoFrase(i) + "' ci sono: " + parolaDao.getNumeroParolePerFrase(i) + " parole");
 			
 		}
 		
+		analisi.add("La parola o parole più usata/e nel testo: " + stampaArraylist(parolaDao.getParolaPiuUsataTesto()) + "per " + parolaDao.getNumeroParolaPiuUsataTesto() + " volta/e");
+
+		
 		for (int c=1; c<=numeroFrasi; c++) {
 			
-			analisi.add("La parola o parole più usata/e per '" + fraseDao.getTestoFrase(c) + "' sono: " + (stampaArraylist(parolaDao.getParolaPiuUsataInOgniFrase(c))) + "per " + parolaDao.getNumeroParolaPiuUsataInOgniFrase(c) + " volta/e");
+			analisi.add("La parola o parole più usata/e per '" + fraseDao.getTestoFrase(c) + "' è o sono: " + (stampaArraylist(parolaDao.getParolaPiuUsataInOgniFrase(c))) + "per " + parolaDao.getNumeroParolaPiuUsataInOgniFrase(c) + " volta/e");
 			
 		}
+		
+		analisi.add("La parola più lunga risulta essere: " + stampaArraylist(parolaDao.getContenutoParolaPiuLunga()));
+		
+		
+		for (int k=1; k<=numeroFrasi; k++) {
+			
+			analisi.add("La parola più lunga o le parole più lunghe per '" + fraseDao.getTestoFrase(k) + "' è o sono: " + (stampaArraylist(parolaDao.getParolaPiuLungaInOgniFrase(k))));
+			
+		}
+		
+		
+		//Troppa roba meglio togliere -- altrimenti si intasa la pagina
+		//analisi.add("Numero di lettere nel testo: " + parolaDao.getNumeroLettereTotali());
+		//analisi.add("Numero di caratteri nel testo: " + fraseDao.getNumeroCaratteriTotali());
+		//analisi.add("Numero medio caratteri per frase: " + fraseDao.getNumeroMedioCaratteriPerFrase());
+		//analisi.add("Numero medio caratteri per parola: " + parolaDao.getNumeroMedioCaratteriPerParola());
+		//analisi.add("Numero medio di parole per frase: " + parolaDao.getNumeroMedioParolePerFrase());
+		//analisi.add("Numero di caratteri della frase più lunga: " + fraseDao.getNumeroCaratteriFrasePiuLunga());
+		//analisi.add("Numero di caratteri della frase più breve: " + fraseDao.getNumeroCaratteriFrasePiuCorta());
+		//analisi.add("Numero di caratteri della parola più lunga: " + parolaDao.getNumeroCaratteriParolaPiuLunga());
+		//analisi.add("Numero di caratteri della parola più breve: " + parolaDao.getNumeroCaratteriParolaPiuCorta());
+    	//analisi.add("La frase più lunga risulta essere: " + stampaArraylist(fraseDao.getContenutoFrasePiuLunga()));
+		//analisi.add("La frase più breve risulta essere: " + stampaArraylist(fraseDao.getContenutoFrasePiuBreve()));
+		//analisi.add("La parola più breve risulta essere: " + stampaArraylist(parolaDao.getContenutoParolaPiuBreve()));
+
+		
+		
 		
     	return analisi;
     	
@@ -99,6 +114,8 @@ public class ScriptServiceImpl implements ScriptService {
 		fraseDao.resetAutoIncrement();
 		
 	}
+
+
 
 
 }

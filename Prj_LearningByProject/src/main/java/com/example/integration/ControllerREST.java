@@ -35,6 +35,7 @@ public class ControllerREST {
 		return serviceimpl.analisi();
 	}
 	
+	
 	@DeleteMapping("/svuota")
 	public void svuotaTabelle() {
 		serviceimpl.cancellaRecords();
