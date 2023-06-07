@@ -1,7 +1,10 @@
 package com.example.services;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -114,6 +117,113 @@ public class ScriptServiceImpl implements ScriptService {
 		fraseDao.resetAutoIncrement();
 		
 	}
+
+	@Override
+	public Map<String, Object> analisiJSON() {
+		
+		int numeroFrasi = fraseDao.getNumeroFrasi();
+		Map<String, Object> analisi = new HashMap<>();
+		
+		analisi.put("paroleInTesto", getNumeroParoleJSON(parolaDao.getNumeroParole()));
+		analisi.put("frasiInTesto", getNumeroParoleJSON(fraseDao.getNumeroFrasi()));
+		analisi.put("numeroParolePerFrase", getNumeroParolePerFraseJSON(numeroFrasi));
+		analisi.put("parolaPiuUsata", getParolaPiuUsataJSON());
+		analisi.put("parolaPiuUsataPerFrase", getParolaPiuUsataPerFraseJSON(numeroFrasi));
+		analisi.put("parolaPiuLunga", parolaDao.getContenutoParolaPiuLunga());
+		analisi.put("parolaPiuLungaPerFrase", getParolaPiuLungaPerFraseJSON(numeroFrasi));
+		
+		return analisi;
+	}
+
+	@Override
+	public Integer getNumeroParoleJSON(int funzioneCheRestituisceNumero) {
+		
+		Integer value = funzioneCheRestituisceNumero;
+		
+		return value;
+	}
+
+	@Override
+	public Map<String, Integer> getNumeroParolePerFraseJSON(int numeroFrasi) {
+		
+		Map<String, Integer> map1 = new HashMap<>();
+		
+		
+		for (int i=1; i<=numeroFrasi; i++) {
+			
+			map1.put(fraseDao.getTestoFrase(i), parolaDao.getNumeroParolePerFrase(i));
+		}
+		
+		return map1;
+	}
+
+	@Override
+	public Map<String, Integer> getParolaPiuUsataJSON() {
+		Map<String, Integer> map2 = new HashMap<>();
+		
+		ArrayList<String> lista1 = new ArrayList<>();
+		lista1 = parolaDao.getParolaPiuUsataTesto();
+
+		for (int i = 0; i < lista1.size(); i++) {
+			
+			map2.put(lista1.get(i), parolaDao.getNumeroParolaPiuUsataTesto());
+			
+		}
+		
+		return map2;
+	}
+
+	@Override
+	public Map<String, Object> getParolaPiuUsataPerFraseJSON(int numeroFrasi) {
+
+		Map<String, Object> map3 = new HashMap<>();
+				
+		
+		for (int c=1; c<=numeroFrasi; c++) {
+				
+		map3.put(fraseDao.getTestoFrase(c), helpGetParolaPiuUsataPerFraseJSON(c));
+		
+		
+		}
+		
+		
+		return map3;
+	}
+
+	@Override
+	public Map<String, Integer> helpGetParolaPiuUsataPerFraseJSON(int indexFrase) {
+		
+		Map<String, Integer> map4 = new HashMap<>();
+		ArrayList<String> lista2 = new ArrayList<>();
+		lista2 = parolaDao.getParolaPiuUsataInOgniFrase(indexFrase);
+		
+		
+		for (int i = 0; i < lista2.size(); i++) {
+			
+			map4.put(lista2.get(i),parolaDao.getNumeroParolaPiuUsataInOgniFrase(indexFrase));
+			
+		}
+		
+				
+		return map4;
+	}
+	
+
+	@Override
+	public Map<String, ArrayList<String>> getParolaPiuLungaPerFraseJSON(int numeroFrasi) {
+		
+		Map<String, ArrayList<String>> map5 = new HashMap<>();
+		
+		for (int k=1; k<=numeroFrasi; k++) {
+			
+			map5.put(fraseDao.getTestoFrase(k), parolaDao.getParolaPiuLungaInOgniFrase(k));
+		}
+		
+		return map5;
+	}
+
+
+
 
 
 
