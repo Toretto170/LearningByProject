@@ -158,17 +158,17 @@ public class ScriptServiceImpl implements ScriptService {
 	}
 
 	@Override
-	public Map<String, Integer> getParolaPiuUsataJSON() {
-		Map<String, Integer> map2 = new HashMap<>();
+	public Map<String, Object> getParolaPiuUsataJSON() {
+		Map<String, Object> map2 = new HashMap<>();
 		
 		ArrayList<String> lista1 = new ArrayList<>();
 		lista1 = parolaDao.getParolaPiuUsataTesto();
 
-		for (int i = 0; i < lista1.size(); i++) {
+		
+			map2.put("parole", lista1);
+			map2.put("volte", parolaDao.getNumeroParolaPiuUsataTesto());
 			
-			map2.put(lista1.get(i), parolaDao.getNumeroParolaPiuUsataTesto());
-			
-		}
+		
 		
 		return map2;
 	}
@@ -190,21 +190,6 @@ public class ScriptServiceImpl implements ScriptService {
 		return map3;
 	}
 
-	@Override
-	public Map<Integer, ArrayList<String>> helpGetParolaPiuUsataPerFraseJSON(int indexFrase) {
-		
-		Map<Integer, ArrayList<String>> map4 = new HashMap<>();
-		ArrayList<String> lista2 = new ArrayList<>();
-		lista2 = parolaDao.getParolaPiuUsataInOgniFrase(indexFrase);
-		
-			
-			map4.put(parolaDao.getNumeroParolaPiuUsataInOgniFrase(indexFrase), lista2);
-			
-		
-		
-				
-		return map4;
-	}
 	
 
 	@Override
@@ -221,6 +206,20 @@ public class ScriptServiceImpl implements ScriptService {
 	}
 
 
+	@Override
+	public Map<String, Object> helpGetParolaPiuUsataPerFraseJSON(int indexFrase) {
+		
+		Map<String, Object> map4 = new HashMap<>();
+		ArrayList<String> lista2 = new ArrayList<>();
+		lista2 = parolaDao.getParolaPiuUsataInOgniFrase(indexFrase);
+		
+		map4.put("parole", lista2);
+		map4.put("volte", parolaDao.getNumeroParolaPiuUsataInOgniFrase(indexFrase));
+		
+		
+		
+		return map4;
+	}
 
 
 

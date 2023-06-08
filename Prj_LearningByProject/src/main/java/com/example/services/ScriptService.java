@@ -15,9 +15,9 @@ public interface ScriptService {
     Map<String, Object> analisiJSON();
     Integer getNumeroParoleJSON(int funzioneCheRestituisceNumero);
     Map<String, Integer> getNumeroParolePerFraseJSON(int numeroFrasi);
-    Map<String, Integer> getParolaPiuUsataJSON();
+    Map<String, Object> getParolaPiuUsataJSON();
     Map<String, Object> getParolaPiuUsataPerFraseJSON(int numeroFrasi);
-    Map<Integer, ArrayList<String>> helpGetParolaPiuUsataPerFraseJSON(int indexFrase);
+    Map<String, Object> helpGetParolaPiuUsataPerFraseJSON(int indexFrase);
     Map<String, ArrayList<String>> getParolaPiuLungaPerFraseJSON(int numeroFrasi);
     String stampaArraylist(ArrayList<String> lista);
     void cancellaRecords();
