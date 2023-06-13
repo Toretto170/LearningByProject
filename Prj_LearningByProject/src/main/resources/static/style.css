@@ -1,5 +1,7 @@
 @import url("https://fonts.googleapis.com/css?family=Roboto+Slab:400");
 @import url("https://fonts.googleapis.com/css?family=Shadows+Into+Light");
+@import url("https://fonts.googleapis.com/css?family=Roboto:400,400i,700");
+@import url("https://fonts.googleapis.com/css2?family=Patrick+Hand&display=swap");
 
 ::-moz-selection {
   color: #fff;
@@ -150,11 +152,60 @@ label {
 }
 
 /* Cambio l'intestazione degli li che si generano dall'analisi*/
-li {
+/* li {
   padding: 5px;
   color: white;
   font-family: Arial, Helvetica, sans-serif;
   background-color: rgb(76, 174, 76);
+} */
+
+label {
+  margin: 0 0 40px 0;
+  line-height: 40px;
+  color: #333;
+}
+
+/* Cambio l'intestazione degli li che si generano dall'analisi*/
+.paper .form-group{
+	font-family: "Patrick Hand", cursive;
+	position: relative;
+	line-height: 25px;
+	box-sizing: content-box;
+	width: 425px;
+	height: 550px;
+	background-color: white;
+	margin: 0 auto;
+	box-shadow: 0px 0px 3px 1px rgba(0, 0, 0, 0.2);
+	transition: transform 0.3s, margin 0.3s;
+}
+
+.paper .form-group:before {
+		content: "";
+		position: absolute;
+		height: 100%;
+		width: 2px;
+		background: rgba(255, 0, 0, 0.3);
+		margin-left: 48px;
+		z-index: 2;
+	}
+
+.lines .form-group {
+		top: 50px;
+		position: relative;
+		box-sizing: content-box;
+		height: calc(550px - 50px);
+		padding-right: 8px;
+		padding-left: 56px;
+		background-image: repeating-linear-gradient(
+			white 0px,
+			white 23.5px,
+			steelblue 25px
+		);
+  }
+
+ li {
+		margin: 0;
+		
 }
 
 
