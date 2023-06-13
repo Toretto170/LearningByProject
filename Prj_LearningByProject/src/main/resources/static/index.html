@@ -1,8 +1,11 @@
-<html>
+<!DOCTYPE html>
+<html lang="it">
 <head>
+    <meta charset="UTF-8">
     <title>Analisi del testo</title>
-    <!-- Link al CDN di Bootstrap -->
+    <!-- Link al CDN di Bootstrap e Cloudflare -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
     <link rel="stylesheet" href="style.css">
     
     <!--Libreria Jquery per integrare Bootstrap-->
@@ -10,9 +13,8 @@
 
 </head>
 <body>
-    <i><h1>Cambia nome del sito</h1></i>
-    <div class="container">
-        <h2>Analisi del testo</h2>
+    <div class="wrapper">
+        <h1 class="two">Il sito di cui il tuo testo aveva bisogno!</h1>
         <!--Pulsante di input del file-->
         <div class="immetti-file">
             <p>Clicca sul pulsante "Scegli File per caricare il file txt e ti daremo un'analisi del contenuto del testo</p>
@@ -20,12 +22,12 @@
             <p>Oppure inserisci il testo da analizzare nella casella qui sotto e clicca sul pulsante "Analizza".</p>
         </div>
         <!-- Form per inserire il testo da analizzare -->
-        <form>
+        <form class="form-group" action="">
             <!-- Textarea per scrivere il testo -->
-            <div class="form-group">
-                <label for="testo">Testo:</label>
-                <textarea class="form-control" id="testo" rows="10"></textarea>
-            </div>
+
+              <fieldset>
+                <textarea class="form-control" id="testo" rows="10" data-placeholder="Scrivi qui il testo..." contenteditable></textarea>
+              </fieldset>
         </form>
         <div class="analisi">
             <!-- Pulsante per avviare l'analisi -->
@@ -41,7 +43,27 @@
         </div>
         </form>
 
-    <footer></footer>
+    <footer>
+      <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve">
+        <defs>
+          <filter id="blur0">
+            <feGaussianBlur in="SourceGraphic" stdDeviation="0 0" />
+          </filter>
+          <filter id="blur1">
+            <feGaussianBlur in="SourceGraphic" stdDeviation="0 5" />
+          </filter>
+          <filter id="blur2">
+            <feGaussianBlur in="SourceGraphic" stdDeviation="0 10" />
+          </filter>
+          <filter id="blur3">
+            <feGaussianBlur in="SourceGraphic" stdDeviation="0 15" />
+          </filter>
+          <filter id="blur4">
+            <feGaussianBlur in="SourceGraphic" stdDeviation="0 20" />
+          </filter>
+        </defs>
+      </svg>      
+    </footer>
 
     <!--Modale Popup che si attiva se Analizzo senza testo-->
     <!-- Bottone per aprire il popup -->
