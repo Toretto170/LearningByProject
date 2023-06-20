@@ -80,7 +80,7 @@ h2, p {
 }
 
 /* Cambio il colore del bordo e del bottone a verde */
-.form-group {
+.form-group, #contenitore-risposta {
   max-width: 1000px;
   margin: 0 auto;
   border-left: 30px solid white;
@@ -93,7 +93,7 @@ h2, p {
 }
 
 /* Cambio la shape dell'input */
-.form-group textarea {
+.form-group textarea, #contenitore-risposta {
   box-sizing: border-box;
   position: relative;
   margin: 0;
@@ -184,9 +184,8 @@ label {
 	font-family: "Patrick Hand", cursive;
 	position: relative;
 	line-height: 25px;
-	box-sizing: content-box;
-	width: 425px;
-	height: 550px;
+	box-sizing: border-box;
+	width: 1000px;
 	background-color: white;
 	margin: 0 auto;
 	box-shadow: 0px 0px 3px 1px rgba(0, 0, 0, 0.2);
@@ -194,32 +193,33 @@ label {
 }
 
 .paper .form-group:before {
-		content: "";
-		position: absolute;
-		height: 100%;
-		width: 2px;
-		background: rgba(255, 0, 0, 0.3);
-		margin-left: 48px;
-		z-index: 2;
-	}
+  content: "";
+  position: absolute;
+  height: 100%;
+  width: 2px;
+  background: rgba(255, 0, 0, 0.3);
+  margin-left: 10px;
+  z-index: 2;
+}
 
 .lines .form-group {
-		top: 50px;
-		position: relative;
-		box-sizing: content-box;
-		height: calc(550px - 50px);
-		padding-right: 8px;
-		padding-left: 56px;
-		background-image: repeating-linear-gradient(
-			white 0px,
-			white 23.5px,
-			steelblue 25px
-		);
-  }
+  top: 50px;
+  position: relative;
+  box-sizing: content-box;
+  height: calc(550px - 50px);
+  padding-right: 8px;
+  padding-left: 56px;
+  background-image: repeating-linear-gradient(
+    white 0px,
+    white 23.5px,
+    steelblue 25px
+  );
+}
 
  li {
-		margin: 0;
-		
+	margin: 0;
+	font-size: 18px;
+  margin-left: 10px;
 }
 
 
@@ -235,8 +235,13 @@ p {
 }
 
 #contenitore-risposta {
+  position: absolute;
+  top: inherit;
+  margin-left: 20%;
   margin-top: 20px;
+  height: inherit;
 }
+
 
 #testo {
   font-weight: lighter ;
