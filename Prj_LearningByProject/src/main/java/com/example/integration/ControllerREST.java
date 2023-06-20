@@ -1,7 +1,9 @@
 package com.example.integration;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -23,6 +25,9 @@ import com.example.script.Script;
 import com.example.script.ScriptException;
 import com.example.services.ScriptServiceImpl;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 @RestController
 @RequestMapping("api")
 public class ControllerREST {
@@ -34,6 +39,28 @@ public class ControllerREST {
 	public ArrayList<String> getAnalisi() {
 		return serviceimpl.analisi();
 	}
+	
+	@GetMapping("/analisiJSON")
+	public String getAnalisiJSON() {
+		
+		Map<String, Object> result = new HashMap<>();
+		result = serviceimpl.analisiJSON();
+		
+		ObjectMapper objectMapper = new ObjectMapper();
+		String jsonString = "";
+		try {
+		    jsonString = objectMapper.writeValueAsString(result);
+		    //System.out.println(jsonString);
+		    return jsonString;
+		} catch (JsonProcessingException e) {
+		    e.printStackTrace();
+		    jsonString = "Qualcosa è andato storto";
+		}
+		
+		return jsonString;
+		
+	}
+	
 	
 	@DeleteMapping("/svuota")
 	public void svuotaTabelle() {

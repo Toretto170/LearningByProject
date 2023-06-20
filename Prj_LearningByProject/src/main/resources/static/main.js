@@ -23,6 +23,7 @@ function intoTextArea(){
 
     reader.onerror = function(event) {
       console.error("Errore durante la lettura del file:", event.target.error);
+      $('#myModal').modal('show');
     };
 
     reader.readAsText(file);
@@ -38,6 +39,8 @@ function modificaPagina(){
   for (var i = 0; i < classeImmettiFile.length; i++) {
     classeImmettiFile[i].style.display = "none";
   }
+   
+
 
   // formRichiesta.innerHTML += "<button type='button' class='btn btn-danger' id='reset-page' onclick='resetPage()'>RESET</button>"
   newBtn = document.createElement('button')
@@ -63,6 +66,9 @@ function resetPage() {
   var resetButton = document.getElementById('reset-page');
   resetButton.parentNode.removeChild(resetButton);
 
+  // Rimuovi file input
+  fileInput.value = null;
+
   // Rimuovi gli elementi aggiunti dalla funzione getFile()
   while (document.getElementById('risultato').firstChild) {
     document.getElementById('risultato').removeChild(document.getElementById('risultato').firstChild);
@@ -84,13 +90,14 @@ function postFile() {
     request.open('POST', URLPOST);
     request.setRequestHeader('Content-Type', 'text/plain');
 
-    request.onload = function() {
+    request.onload = function() {  
       if (request.status === 200) {
         console.log("File caricato correttamente.");
         resolve();
       } else {
         console.error("File non caricato. Richiesta POST non andata a buon fine. Codice Errore:", request.statusText);
         reject(new Error(request.statusText));
+        $('#myModal').modal('show');
         //Cancella il db quando si crasha
         //deleteFile();
       }
@@ -99,6 +106,7 @@ function postFile() {
     request.onerror = function() {
       console.error('File non caricato. Richiesta POST non risulta essere inviata');
       reject(new Error('Errore di connessione'));
+      $('#myModal').modal('show');
     };
 
     request.send(text);
@@ -108,6 +116,7 @@ function postFile() {
 // Connessione ad API via GET
 function getFile() {
   formRisposta.removeAttribute('style');
+  bottoneAnalisi.style.display = "none";
   return fetch('http://localhost:9020/api/analisi')
     .then(function(response) {
       if (response.ok) {
@@ -122,13 +131,42 @@ function getFile() {
         var listItem = document.createElement("li");
         listItem.textContent = item;
         document.getElementById('risultato').appendChild(listItem);
-         // Stile risposta
-         listItem.style.backgroundColor = ' rgb(76, 174, 76)';
       });
     })
     .catch(function(error) {
       console.error(error);
+      $('#myModal').modal('show');
     });
+}
+
+// Connessione ad API via GET
+function getJSON() {
+
+  return new Promise(function(resolve, reject) {
+    const URLGETJSON = 'http://localhost:9020/api/analisiJSON';
+    let request = new XMLHttpRequest();
+
+    request.open('GET', URLGETJSON);
+    request.setRequestHeader('Content-Type', 'application/json');
+
+    request.onload = function() {
+      if (request.status === 200) {
+        console.log(request.responseText);
+        resolve();
+      } else {
+        console.error("JSON non scaricato. Codice Errore:", request.statusText);
+        reject(new Error(request.statusText));
+      }
+    };
+
+    request.onerror = function() {
+      console.error('JSON non scaricato');
+      reject(new Error('Errore di connessione'));
+    };
+
+    request.send();
+  });
+
 }
 
 // Connessione ad API via DELETE
@@ -147,17 +185,20 @@ function deleteFile() {
       } else {
         console.error("File non eliminato. Richiesta DELETE non andata a buon fine. Codice Errore:", request.statusText);
         reject(new Error(request.statusText));
+        $('#myModal').modal('show');
       }
     };
 
     request.onerror = function() {
       console.error('File non eliminato. Richiesta DELETE non risulta essere inviata');
       reject(new Error('Errore di connessione'));
+      $('#myModal').modal('show');
     };
 
     request.send();
   });
 }
+
 
 // Fa tutte e tre le cose e gestisce la modale di errore
 function callAPI() {
