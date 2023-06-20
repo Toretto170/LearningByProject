@@ -106,6 +106,7 @@ function postFile() {
     request.onerror = function() {
       console.error('File non caricato. Richiesta POST non risulta essere inviata');
       reject(new Error('Errore di connessione'));
+      document.getElementsByClassName("modal-body text-center").textContent('File non caricato');
       $('#myModal').modal('show');
     };
 
@@ -193,6 +194,7 @@ function deleteFile() {
     request.onerror = function() {
       console.error('File non eliminato. Richiesta DELETE non risulta essere inviata');
       reject(new Error('Errore di connessione'));
+      document.getElementsByClassName("modal-body text-center").textContent('File non eliminato');
       $('#myModal').modal('show');
     };
 

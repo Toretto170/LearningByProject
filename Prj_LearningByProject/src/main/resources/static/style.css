@@ -196,6 +196,7 @@ label {
   content: "";
   position: absolute;
   height: 100%;
+  top: 0px;
   width: 2px;
   background: rgba(255, 0, 0, 0.3);
   margin-left: 10px;
@@ -219,7 +220,13 @@ label {
  li {
 	margin: 0;
 	font-size: 18px;
-  margin-left: 10px;
+  margin-left: 12px;
+}
+
+li:nth-child(3), li:nth-child(31){
+  margin-top: 15px;
+  border-top: dotted #E08183 4px;
+  padding-top: 15px;
 }
 
 
@@ -237,7 +244,7 @@ p {
 #contenitore-risposta {
   position: absolute;
   top: inherit;
-  margin-left: 20%;
+  margin-left: 20vw;
   margin-top: 20px;
   height: inherit;
 }
