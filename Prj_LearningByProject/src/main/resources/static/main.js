@@ -139,6 +139,36 @@ function getFile() {
     });
 }
 
+// Connessione ad API via GET
+function getJSON() {
+
+  return new Promise(function(resolve, reject) {
+    const URLGETJSON = 'http://localhost:9020/api/analisiJSON';
+    let request = new XMLHttpRequest();
+
+    request.open('GET', URLGETJSON);
+    request.setRequestHeader('Content-Type', 'application/json');
+
+    request.onload = function() {
+      if (request.status === 200) {
+        console.log(request.responseText);
+        resolve();
+      } else {
+        console.error("JSON non scaricato. Codice Errore:", request.statusText);
+        reject(new Error(request.statusText));
+      }
+    };
+
+    request.onerror = function() {
+      console.error('JSON non scaricato');
+      reject(new Error('Errore di connessione'));
+    };
+
+    request.send();
+  });
+
+}
+
 // Connessione ad API via DELETE
 function deleteFile() {
   return new Promise(function(resolve, reject) {

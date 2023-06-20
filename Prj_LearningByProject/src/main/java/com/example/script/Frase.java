@@ -18,11 +18,10 @@ public class Frase {
             try {
                 temp = new Parola(string);
             } catch (ScriptException e) {
-                throw new ScriptException(
-                    "Parametro '_frase' non valido, errore all'indice: "
+                System.err.println("Parametro '_frase' non valido, errore all'indice: "
                     .concat(Integer.toString(_param.indexOf(string)))
-                    .concat(e.getMessage())
-                );
+                    .concat(e.getMessage()));
+                continue;
             }
             _frase.add(temp);
         }
