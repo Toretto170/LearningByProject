@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import java.io.IOException;
-
 public class Script {
 	
 	// Costruisce un'espressione regolare che rappresenta una scelta tra una lista di stringhe
@@ -34,46 +32,22 @@ public class Script {
 
 	// Legge il testo e crea una Lista di frasi formata ognuna da una lista di parole
 	public static List<Frase> leggiPerFrasiParole(String text) throws ScriptException {
-		// TODO check buildRegexOR behavior 
-		List<Frase> testo = new ArrayList<>();
+		List<Frase> completeText = new ArrayList<>();
 		try {
-			// String[] preRegex = {".", "?", "!", ";"};
-			//List<String> frases = Arrays.asList(
-			//	text.replaceAll(
-			//		buildRegexOR(Arrays.asList("r n","n")),
-			//		" "
-			//	).split(
-			//		buildRegexOR(Arrays.asList(".", "?", "!", ";"))+ // divide quando . ; ? ! seguito da 0 o più spazi
-			//		"(\\s)*"
-			//	)
-			//); 
-			List<String> frases = leggiPerFrasi(text);
-			// (?<=[.!?])\\s+|\\n+
-			//buildRegexOR(Arrays.asList(",", ":", "\"", "-", "'", "“", "”"));
-			for (String string : frases) {
-				System.out.println("\ndiocaneFrase x \n");
-				for (String string2 : string.replaceAll("\\.|\\?|!|;", "").replaceAll("(,|:|\"|-|\\'|“|”)", " ").strip().split("(\\s)+")) {
-					System.out.println(string2);
-				}
-				String[] a = string
+			List<String> phrases = leggiPerFrasi(text);
+			for (String string : phrases) {
+				String[] tempArr = string
 					.replaceAll(buildRegexOR(Arrays.asList(".", "?", "!", ";")), "")
 					.replaceAll("(,|:|\"|-|\\'|“|”)", " ")
 					.strip()
 					.split("(\\s)+");
-				/* 
-				String[] a = string
-					.replaceAll("."+buildRegexOR(Arrays.asList(".", "?", "!", ";"))+"((.)|(\\s))", "") // (?=\\.|\\?|!|;)(?=.|\\s)
-					.replaceAll("(,|:|\"|-|\\'|“|”)", " ")
-					.strip()
-					.split("(\s)+"); 
-				*/
-				Frase aa = new Frase(Arrays.asList(a)); // split when one or more spaces are found
-				testo.add(aa);
+				Frase temPhrases = new Frase(Arrays.asList(tempArr)); 
+				completeText.add(temPhrases);
 			} 
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return testo;
+		return completeText;
 	}
 	
 	// Suddivide il testo in frasi con punteggiatura e restituisce una lista di frasi

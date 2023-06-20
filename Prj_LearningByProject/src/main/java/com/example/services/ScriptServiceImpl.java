@@ -1,6 +1,7 @@
 package com.example.services;
 
 import java.util.ArrayList;
+
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -9,14 +10,12 @@ import java.util.Set;
 import java.util.TreeSet;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Service;
 
 import com.example.entities.Parola;
 import com.example.entities.Frase;
 import com.example.repos.ParolaDAO;
 
-import jakarta.persistence.EntityManager;
 
 import com.example.repos.FraseDAO;
 
