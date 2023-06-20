@@ -81,7 +81,7 @@ function resetPage() {
 
 // Connessione ad API via POST
 function postFile() {
-  
+  bottoneAnalisi.style.display = 'none';
   var text = textArea.value;
   return new Promise(function(resolve, reject) {
     const URLPOST = 'http://localhost:9020/api/process';
@@ -116,7 +116,7 @@ function postFile() {
 // Connessione ad API via GET
 function getFile() {
   formRisposta.removeAttribute('style');
-  bottoneAnalisi.style.display = "none";
+
   return fetch('http://localhost:9020/api/analisi')
     .then(function(response) {
       if (response.ok) {
@@ -155,6 +155,7 @@ function deleteFile() {
       } else {
         console.error("File non eliminato. Richiesta DELETE non andata a buon fine. Codice Errore:", request.statusText);
         reject(new Error(request.statusText));
+        document.getElementsByClassName("modal-body text-center").textContent('File non eliminato');
         $('#myModal').modal('show');
       }
     };
