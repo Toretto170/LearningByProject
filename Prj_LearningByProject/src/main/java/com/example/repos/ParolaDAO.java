@@ -51,6 +51,18 @@ public interface ParolaDAO extends JpaRepository<Parola, Integer>{
 	@Query(value = "SELECT COUNT(*) as numeroParole FROM parola WHERE frase_fk_id = :fraseId GROUP BY frase_fk_id", nativeQuery = true)
 	int getNumeroParolePerFrase(@Param("fraseId") int fraseId);
 	
+	@Query(value = "SELECT testo_parola FROM ( " +
+	        "SELECT testo_parola, MAX(LENGTH(testo_parola)) as lunghezza " +
+	        "FROM parola WHERE frase_fk_id = :fraseId " +
+	        "GROUP BY frase_fk_id, testo_parola) AS parole " +
+	        "WHERE lunghezza = (SELECT MAX(lunghezza) " +
+	        "FROM (SELECT MAX(LENGTH(testo_parola)) as lunghezza " +
+	        "FROM parola WHERE frase_fk_id = :fraseId " +
+	        "GROUP BY frase_fk_id, testo_parola) AS max_lunghezza);", nativeQuery = true)
+	ArrayList<String> getParolaPiuLungaInOgniFrase(@Param("fraseId") int fraseId);
+
+	
+	
     @Modifying
     @Transactional
     @Query(value = "ALTER TABLE parola AUTO_INCREMENT = 1", nativeQuery = true)
