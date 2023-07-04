@@ -42,8 +42,11 @@ h1 {
     padding: 0 20vw;
     font: 400 56px 'Roboto Slab', serif;
     font-size: 56px;
+    font-weight: bold;
     text-align: center;
-    color: #fff;
+    background: -webkit-linear-gradient(rgba(252,135,69,1) 6%, rgba(253,183,49,1) 55%, rgba(253,230,29,1) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
 
 .two h1 {
@@ -69,20 +72,21 @@ h2, p {
 }
 
 .immetti-file p {
-  font-size: 13px;
+  font-size: 18px;
   font-weight: 500;
   text-transform: uppercase;
   letter-spacing: 2px;
   line-height: 3em;
   padding-left: 0.25em;
-  color: rgb(211, 240, 211);
+  color: #fafd94;
+  text-shadow: rgb(11, 80, 11) 1px 0 10px;
   padding-bottom: 10px;
 }
 
 /* Cambio il colore del bordo e del bottone a verde */
 .form-group, #contenitore-risposta {
   max-width: 1000px;
-  margin: 0 auto;
+  margin: auto;
   border-left: 30px solid white;
   -o-border-image: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz48IURPQ1RZUEUgc3ZnIFBVQkxJQyAiLS8vVzNDLy9EVEQgU1ZHIDEuMS8vRU4iICJodHRwOi8vd3d3LnczLm9yZy9HcmFwaGljcy9TVkcvMS4xL0RURC9zdmcxMS5kdGQiPjxzdmcgdmVyc2lvbj0iMS4xIiBpZD0iTGF5ZXJfMSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgeD0iMHB4IiB5PSIwcHgiIHdpZHRoPSI0MS44NnB4IiBoZWlnaHQ9IjUyLjMyNnB4IiB2aWV3Qm94PSIwIDAgNDEuODYgNTIuMzI2IiBlbmFibGUtYmFja2dyb3VuZD0ibmV3IDAgMCA0MS44NiA1Mi4zMjYiIHhtbDpzcGFjZT0icHJlc2VydmUiPjxwYXRoIGZpbGw9IiNGRkZGRkYiIGQ9Ik0wLDB2MjUuMTYzaDcuMDk3YzAuNTAxLTQuOTg5LDQuNzEyLTguODg0LDkuODMzLTguODg0YzUuNDU4LDAsOS44ODQsNC40MjUsOS44ODQsOS44ODRzLTQuNDI1LDkuODg0LTkuODg0LDkuODg0Yy01LjEyMSwwLTkuMzMyLTMuODk1LTkuODMzLTguODg0SDB2MjUuMTYzaDQxLjg2VjBIMHoiLz48L3N2Zz4=) 5% 100% repeat;
      border-image: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz48IURPQ1RZUEUgc3ZnIFBVQkxJQyAiLS8vVzNDLy9EVEQgU1ZHIDEuMS8vRU4iICJodHRwOi8vd3d3LnczLm9yZy9HcmFwaGljcy9TVkcvMS4xL0RURC9zdmcxMS5kdGQiPjxzdmcgdmVyc2lvbj0iMS4xIiBpZD0iTGF5ZXJfMSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgeD0iMHB4IiB5PSIwcHgiIHdpZHRoPSI0MS44NnB4IiBoZWlnaHQ9IjUyLjMyNnB4IiB2aWV3Qm94PSIwIDAgNDEuODYgNTIuMzI2IiBlbmFibGUtYmFja2dyb3VuZD0ibmV3IDAgMCA0MS44NiA1Mi4zMjYiIHhtbDpzcGFjZT0icHJlc2VydmUiPjxwYXRoIGZpbGw9IiNGRkZGRkYiIGQ9Ik0wLDB2MjUuMTYzaDcuMDk3YzAuNTAxLTQuOTg5LDQuNzEyLTguODg0LDkuODMzLTguODg0YzUuNDU4LDAsOS44ODQsNC40MjUsOS44ODQsOS44ODRzLTQuNDI1LDkuODg0LTkuODg0LDkuODg0Yy01LjEyMSwwLTkuMzMyLTMuODk1LTkuODMzLTguODg0SDB2MjUuMTYzaDQxLjg2VjBIMHoiLz48L3N2Zz4=) 5% 100% repeat;
@@ -96,7 +100,6 @@ h2, p {
 .form-group textarea, #contenitore-risposta {
   box-sizing: border-box;
   position: relative;
-  margin: 0;
   padding: 0px 10px 20px 40px;
   border: none;
   border-radius: 0 20px 20px 0;
@@ -118,10 +121,11 @@ h2, p {
 
 input, button {
   margin-bottom: 15px;
-  margin-left: 45%;
+  margin-left: 45vw;
   object-position: center;
   font-family: "Shadows Into Light", cursive;
   color: #ffffff;
+  font-size: 20px;
   background: transparent;
   cursor: pointer;
   transition: transform 0.25s ease;
@@ -188,7 +192,7 @@ label {
 	box-sizing: border-box;
 	width: 1000px;
 	background-color: white;
-	margin: 0 auto;
+	margin: auto;
 	box-shadow: 0px 0px 3px 1px rgba(0, 0, 0, 0.2);
 	transition: transform 0.3s, margin 0.3s;
   padding-top: 0px;
@@ -275,10 +279,8 @@ p {
 }
 
 #contenitore-risposta {
-  position: absolute;
   top: inherit;
   padding-top: 10px;
-  margin-left: 20vw;
   margin-top: 20px;
   height: inherit;
 }
